@@ -1,22 +1,22 @@
 ################################################################################
 # These are variables for the GBA toolchain build
 # You can add others if you wish to
-# ***** YOUR NAME HERE *****
+# ***** Eugene Chu *****
 ################################################################################
 
 # The name of your desired GBA game
 # This should be a just a name i.e MyFirstGBAGame
 # No SPACES AFTER THE NAME.
-PROGNAME =
+PROGNAME = platformer
 
 # The object files you want to compile into your program
 # This should be a space (SPACE!) separated list of .o files
-OFILES =
+OFILES = main.o 
 
 # The header files you have created.
 # This is necessary to determine when to recompile for files.
 # This should be a space (SPACE!) separated list of .h files
-HFILES =
+HFILES = 
 
 ################################################################################
 # These are various settings used to make the GBA toolchain work
