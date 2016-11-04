@@ -1,0 +1,74 @@
+===============================================================================
+CS2110                             Lab 18                           Fall  2016
+===============================================================================
+ 
+Objective: Make a simple software state machine for a GBA game
+ 
+This is a lab where you will implement a simple state machine in software for a
+GBA game. This will be helpful as a generic high-level design for your game.
+
+Note: You may NOT use the provided mylib.s file for your homework.
+
+
+Assignment
+----------
+In the provided main.c, edit it appropriately to create a state machine that
+can cycle between multiple screens by pressing A. If the user presses A, the
+game should advance exactly one state no matter how long the A button is held,
+and it should advance immediately when the A button is pressed.
+
+Solutions that advance after the user lets go of A will not receive credit.
+Solutions that tear will not receive credit.
+
+This state machine should have 4 states:
+
+--> Start --[A]-> State1 --[A]-> State2 --[A]-> State3 --[A]-> (back to start)
+
+That is, pressing A 4 times will loop back to the start state.
+
+For each state, use the provided prototypes fillScreen3 and drawString3 to draw
+something different for each state. Draw whatever you want; be creative!
+
+
+
+Hints
+-----
+You could use dummy states like in previous labs to implement the logic for
+only advancing one state at a time when A is pressed, but that would cause the
+entire game to freeze if you use a busy loop so we need to implement the
+detection somehow else. Example:
+
+    while(KEY_DOWN_NOW(BUTTON_A)) {}
+    state = STATE2; // This is wrong because it will advance when you release
+                    // the A button, not when it is pressed
+
+Consider that if you want to do something only one time when a button is
+pressed, the idea is "I want to do X if button A was pressed this frame, but
+not last frame." You would of course have to make a variable that holds the
+state of the buttons in the previous frame so that it can be compared to the
+current one. Be sure to update the variable each cycle as well!
+
+The use of "~BUTTONS" in the KEY_DOWN_NOW macro is because the way the GBA
+hardware works is that the bitvector representing which buttons are active is
+set to all 1s, with a zero where buttons are active. The inversion is to turn
+the vector into one where there is a 1 for active buttons instead.
+
+The reason that the template includes states for START and START_NODRAW is
+because it uses the START state to draw the start screen, and START_NODRAW is
+where it polls for the user to press A to advance a state. START_NODRAW is
+technically part of the same high-level state, but the screen just isn't being
+redrawn then since it's already been drawn once. It is designed like this,
+with two switch cases representing the "start" state to prevent tearing.
+
+
+
+Submission
+----------
+When you finish, archive and submit the following files to T-Square:
+
+    Makefile
+    main.c
+    mylib.s
+
+You can create the archive with tar -czvf lab18_submission.tar.gz lab18
+
