@@ -66,7 +66,7 @@ void start() {
 
 int game() {
 	REG_DISPCNT = MODE3 | BG2_ENABLE;
-	setColor(CYAN);
+	setColor(BLACK);
 
 	PLAYER player = {160 - GOKU_STAND_HEIGHT, 0, NUMBER_JUMPS, 1, RIGHT, STAND};
 	waitForVblank();
@@ -76,6 +76,8 @@ int game() {
 
 	while(1) {
 		player.row += 1;
+		if (player.row > 160 - GOKU_STAND_HEIGHT) player.row = 160 - GOKU_STAND_HEIGHT;
+		if (player.row < 0) player.row = 0;
 		if (player.col < 0) player.col = 0;
 		if (player.col > 240 - GOKU_RUN1_HEIGHT) player.col = 240 - GOKU_RUN1_HEIGHT;
 
