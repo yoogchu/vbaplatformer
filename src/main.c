@@ -5,6 +5,13 @@
 #include "./images/goku_main.h"
 #include "./images/goku_dead.h"
 #include "./images/goku_stand.h"
+#include "./images/goku_standL.h"
+#include "./images/goku_run1.h"
+#include "./images/goku_run1L.h"
+#include "./images/goku_jump1.h"
+#include "./images/goku_jump1L.h"
+#include "./images/goku_dash4.h"
+#include "./images/goku_dash4L.h"
 
 #define PLAYER_SPEED 2
 #define NUMBER_JUMPS 2
@@ -57,17 +64,48 @@ void start() {
 int game() {
 	REG_DISPCNT = MODE3 | BG2_ENABLE;
 	setColor(CYAN);
-	if (KEY_DOWN_NOW(BUTTON_START)){
-		return END;
-	}
 
-//	PLAYER player = {160 - GOKU_STAND_HEIGHT, 0, RIGHT, NUMBER_JUMPS, 1);
-	drawImage3(160 - GOKU_STAND_HEIGHT, 0, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, goku_stand);
-
+//	PLAYER player = {160 - GOKU_STAND_HEIGHT, 0, RIGHT, NUMBER_JUMPS, 1};	
+//	drawImage3(160 - GOKU_STAND_HEIGHT, 0, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, goku_stand);
+	waitForVblank();
+/*
+	drawPlayer(player);
 	waitForVblank();
 
+	while(1) {	
+		if (KEY_DOWN_NOW(BUTTON_START)) {
+			return END;
+		} if (KEY_DOWN_NOW(BUTTON_UP)) {
+			player.stance = UP;
+			player.row -= (PLAYER_SPEED*2);
+			if (player.row < 0) player.row = 0;
+		} if (KEY_DOWN_NOW(BUTTON_DOWN)) {
+			player.row += PLAYER_SPEED;
+			if (player.row > 160 - GOKU_STAND_HEIGHT) player.row = 160 - GOKU_STAND_HEIGHT;
+		} if(KEY_DOWN_NOW(BUTTON_LEFT)) {
+			player.stance = RUN;
+			player.facing = LEFT;
+			player.col -= PLAYER_SPEED;
+			if (player.col < 0) player.col = 0;
+		} if(KEY_DOWN_NOW(BUTTON_RIGHT)) {
+			player.stance = RUN;
+			player.facing = LEFT;
+			player.col += PLAYER_SPEED;
+			if (player.col > 240 - GOKU_RUN1_HEIGHT) player.col = 240 - GOKU_RUN1_HEIGHT;
+		} if(KEY_DOWN_NOW(BUTTON_A)) {
+			player.stance = DASH;
+			if (player.facing == LEFT) player.col -= 50;
+			if (player.facing == RIGHT) player.col += 50;
+			if (player.col < 0) player.col = 0;
+			if (player.col > 240 - GOKU_RUN1_HEIGHT) player.col = 240 - GOKU_RUN1_HEIGHT;
+		}
+		waitForVblank();
+		drawPlayer(player);
+	}
+*/
 	return 1;
-}	 
+}
+	 
 /*
 	DOODLER doodler = {160 - DOODLER_SIZE, 240 - INFO_GUTTER_WIDTH - DOODLER_SIZE, LEFT};
 	DOODLER oldDoodler = doodler;
