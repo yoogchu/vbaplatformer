@@ -123,7 +123,7 @@ int game() {
 		isValidJump = KEY_DOWN_NOW(BUTTON_UP);
 		isValidDash = KEY_DOWN_NOW(BUTTON_A);
 		waitForVblank();
-		drawRect(oldPlayer.row, oldPlayer.col, GOKU_STAND_HEIGHT, GOKU_DASH4_WIDTH+40, BLACK);
+		drawRect(oldPlayer.row, oldPlayer.col, player.width, player.height, BLACK);
 		//setColor(BLACK);
         	drawPlayer(player);
         	oldPlayer = player;
