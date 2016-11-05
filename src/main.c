@@ -12,6 +12,9 @@
 #include "./images/goku_jump1L.h"
 #include "./images/goku_dash4.h"
 #include "./images/goku_dash4L.h"
+#include "./images/platform_up.h"
+#include "./images/platform_left.h"
+#include "./images/platform_right.h"
 
 
 
@@ -75,7 +78,9 @@ int game() {
 	drawPlayer(player);
 
 	waitForVblank();
-    	int isValidJump = 0;
+	PLATFORM platform = {rand()%120, rand()%(240 - PLATFORM_UP_WIDTH), PLATFORM_UP_WIDTH, PLATFORM_UP_HEIGHT, rand()%4, UP};
+	drawPlatform(platform);    	
+	int isValidJump = 0;
 	int isValidDash = 0;
     
 	while(1) {

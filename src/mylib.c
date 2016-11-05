@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "mylib.h"
 #include "./images/goku_stand.h"
 #include "./images/goku_standL.h"
@@ -67,14 +69,16 @@ void drawPlayer(PLAYER player) {
 } 
 
 void drawPlatform (PLATFORM platform) {
+	int r = 0;
 	for(int i = 0; i < platform.num; i++) {
-		if (platform.facing == UP) {
+		r = rand()%3;
+		if (r == 0) {
 			drawImage3(platform.row, platform.col, PLATFORM_UP_WIDTH, PLATFORM_UP_HEIGHT, platform_up);
 		}
-		else if (platform.facing == LEFTP) {
+		else if (r == 1) {
 			drawImage3(platform.row, platform.col, PLATFORM_LEFT_WIDTH, PLATFORM_LEFT_HEIGHT, platform_left);
 		}
-		else if (platform.facing == RIGHTP) {
+		else if (r == 2) {
 			drawImage3(platform.row, platform.col, PLATFORM_RIGHT_WIDTH, PLATFORM_RIGHT_HEIGHT, platform_right);
 		}
 	}
