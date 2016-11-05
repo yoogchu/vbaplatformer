@@ -79,13 +79,29 @@ int game() {
 	drawPlayer(player);
 
 	waitForVblank();
-	PLATFORM platform = {rand()%120, rand()%(240 - PLATFORM_UP_WIDTH), PLATFORM_UP_WIDTH, PLATFORM_UP_HEIGHT, rand()%4, UP};
-	drawPlatform(platform);    	
+	int num_plat = (rand()%2)+2;
+	PLATFORM platforms [num_plat];
+	for(int i=0;i<num_plat;i++){
+		platforms[i].facing = rand()%3;
+		platforms[i].row = (rand()%120) - PLATFORM_LEFT_HEIGHT + 40;
+		platforms[i].col = rand()%(120 - PLATFORM_UP_WIDTH);
+		if (platforms[i].facing == 2) {
+			platforms[i].row-=60;
+		} else if (platforms[i].facing == 1) {
+			platforms[i].col+=120;
+		} else if (platforms[i].facing == 0) {
+			platforms[i].col+=60;
+		}
+		if (platforms[i].row < 0) platforms[i].row = 0;
+		if (platforms[i].row > 120) platforms[i].row = 120 - GOKU_STAND_HEIGHT - 20;
+		
+		drawPlatform(platforms[i]);
+	}  	
 	int isValidJump = 0;
 	int isValidDash = 0;
     
 	while(1) {
-		player.row += 2;
+		player.row += 1; 	//GRAVITY
 		if (player.row > 160 - GOKU_STAND_HEIGHT) player.row = 160 - GOKU_STAND_HEIGHT;
 		if (player.row < 0) player.row = 0;
 		if (player.col < 0) player.col = 0;
