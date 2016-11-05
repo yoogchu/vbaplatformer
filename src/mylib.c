@@ -145,12 +145,12 @@ void waitForVblank() {
 }
 int checkCollision(PLAYER player, PLATFORM platform) {
 //case bonking from bottom
-	if ( (player.row <= (platform.row + platform.height)) && //head
-		((player.col + player.width) >= platform.col) &&  //right side
-		(player.col <= platform.col + platform.width) ){  //left side
-		return 1;
+	if ( (player.row <= (platform.row + platform.height))) {
+        if (((player.col + player.width) >= platform.col) & ((player.col <= ((platform.col + platform.width))))) {
+        return 1;
+   } 
 	}
-	return 0;
+    return 0;
 }
 
 /*//int collisionBufferZone
