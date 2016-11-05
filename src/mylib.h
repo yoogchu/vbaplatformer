@@ -34,6 +34,7 @@ extern u16* videoBuffer;
 
 
 // buttons
+#define BUTTONS       *(volatile unsigned short*) 0x4000130
 #define BUTTON_A	(1<<0)
 #define BUTTON_B	(1<<1)
 #define BUTTON_SELECT	(1<<2)
@@ -45,7 +46,8 @@ extern u16* videoBuffer;
 #define BUTTON_R	(1<<8)
 #define BUTTON_L	(1<<9)
 #define KEY_DOWN_NOW(key)  (~(BUTTONS) & key)
-#define BUTTONS *(volatile unsigned int *)0x4000130
+#define KEY_UP_NOW(key) (~(BUTTONS) & ~key)
+
 
 // dma
 typedef struct

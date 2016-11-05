@@ -51,7 +51,7 @@ void drawPlayer(PLAYER player){
 	    }
     } else {
 	 if (player.stance == DASH) {
-            drawImage3(player.row, player.col, GOKU_DASH4_WIDTH, GOKU_DASH4_HEIGHT, goku_dash4L);
+            drawImage3(player.row, player.col, GOKU_DASH4L_WIDTH, GOKU_DASH4L_HEIGHT, goku_dash4L);
 	    }
         else if (player.stance == JUMP) {
             drawImage3(player.row, player.col, GOKU_JUMP1_WIDTH, GOKU_JUMP1_HEIGHT, goku_jump1L);

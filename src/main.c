@@ -16,7 +16,6 @@
 
 
 #define PLAYER_SPEED 2
-#define NUMBER_JUMPS 2
 #define GOKU_STAND_HEIGHT 48
 
 enum {START, GAME, END};
@@ -68,17 +67,17 @@ int game() {
 	REG_DISPCNT = MODE3 | BG2_ENABLE;
 	setColor(BLACK);
 
-	PLAYER player = {160 - GOKU_STAND_HEIGHT, 0, NUMBER_JUMPS, 1, RIGHT, STAND};
+	PLAYER player = {160 - GOKU_STAND_HEIGHT, 0, 2, 1, RIGHT, STAND};
 	PLAYER oldPlayer = player;
 
     waitForVblank();
 	drawPlayer(player);
 
 	waitForVblank();
-    
+    	int isValidJump = 0;
     
 	while(1) {
-		player.row += 1;
+		player.row += 2;
 		if (player.row > 160 - GOKU_STAND_HEIGHT) player.row = 160 - GOKU_STAND_HEIGHT;
 		if (player.row < 0) player.row = 0;
 		if (player.col < 0) player.col = 0;
@@ -86,10 +85,12 @@ int game() {
 
 		if (KEY_DOWN_NOW(BUTTON_START)) {
 			return END;
-		} if (KEY_DOWN_NOW(BUTTON_UP)) {
+		} if (KEY_DOWN_NOW(BUTTON_UP) && (isValidJump == 0) && (player.doubleJump >0)) {
 			player.stance = JUMP;
-			player.row -= (PLAYER_SPEED*2);
-			if (player.row < 0) player.row = 0;
+			player.row -= GOKU_STAND_HEIGHT;
+			player.doubleJump -=1;
+
+		  if (player.row < 0) player.row = 0;
 		} if (KEY_DOWN_NOW(BUTTON_DOWN)) {
 			player.row += PLAYER_SPEED;
 			if (player.row > 160 - GOKU_STAND_HEIGHT) player.row = 160 - GOKU_STAND_HEIGHT;
@@ -105,196 +106,24 @@ int game() {
 			if (player.col > 240 - GOKU_RUN1_HEIGHT) player.col = 240 - GOKU_RUN1_HEIGHT;
 		} if(KEY_DOWN_NOW(BUTTON_A)) {
 			player.stance = DASH;
-			if (player.facing == LEFT) player.col -= 50;
-			if (player.facing == RIGHT) player.col += 50;
+			if (player.facing == LEFT) player.col -= 20;
+			if (player.facing == RIGHT) player.col += 20;
+			drawRect(oldPlayer.row, oldPlayer.col, GOKU_STAND_HEIGHT, GOKU_DASH4_WIDTH, BLACK);
 			if (player.col < 0) player.col = 0;
 			if (player.col > 240 - GOKU_RUN1_HEIGHT) player.col = 240 - GOKU_RUN1_HEIGHT;
 		}
+		
+		isValidJump = KEY_DOWN_NOW(BUTTON_UP);
 		waitForVblank();
 		drawRect(oldPlayer.row, oldPlayer.col, GOKU_STAND_HEIGHT, GOKU_STAND_WIDTH, BLACK);
+	//setColor(BLACK);
         drawPlayer(player);
         oldPlayer = player;
+	
 	}
 	
 	return 1;
 }
-	 
-/*
-	DOODLER doodler = {160 - DOODLER_SIZE, 240 - INFO_GUTTER_WIDTH - DOODLER_SIZE, LEFT};
-	DOODLER oldDoodler = doodler;
-	int doodlerSpeed = DOODLER_SPEED_DEFAULT;
-	JETPACK sJetpack = {rand()%50, rand()%50};
-
-	ENEMY enemies [NUMENEMIES];
-	ENEMY oldEnemies [NUMENEMIES];
-	ENEMY *cur;
-	int d[] = {-1, 0, 1};
-	int numd = sizeof(d) / sizeof(d[0]);
-
-	for (int i = 0; i < NUMENEMIES; i++)
-	{
-		enemies[i].row = rand()%60 + rand()%60;
-		enemies[i].col = rand()%100 + 60;
-		enemies[i].drow = d[rand()%numd];
-		enemies[i].dcol = d[rand()%numd];
-		while (!enemies[i].drow && !enemies[i].dcol)
-		{
-			enemies[i].drow = d[rand()%numd];
-			enemies[i].dcol = d[rand()%numd];
-		}
-		oldEnemies[i] = enemies[i];
-	}
-	
-	
-	drawDoodler(doodler);
-	for (int i = 0; i < NUMENEMIES; i++)
-	{
-		drawEnemy(enemies[i]);
-	}
-	drawJetpack(sJetpack);
-
-	drawChar(76, 117, '3', BLUE);
-	for (int i = 0; i < 500; i++)
-	{
-		waitForVblank();
-	}
-	
-	drawChar(76, 117, '3', WHITE);
-	drawChar(76, 117, '2', BLUE);
-	for (int i = 0; i < 500; i++)
-	{
-		waitForVblank();
-	}
-	drawChar(76, 117, '2', WHITE);
-	drawChar(76, 117, '1', BLUE);
-	for (int i = 0; i < 500; i++)
-	{
-		waitForVblank();
-	}
-	drawChar(76, 117, '1', WHITE);
-	while(1)
-	{
-		if(KEY_DOWN_NOW(BUTTON_B))
-		{
-			while(KEY_DOWN_NOW(BUTTON_B))
-			{
-				drawChar(76, 117, 'P', RED);
-			}
-			drawChar(76, 117, 'P', WHITE);
-		}
-		
-		if(KEY_DOWN_NOW(BUTTON_UP))
-		{
-			doodler.row -= doodlerSpeed;
-			if (doodler.row < 0)
-			{
-				doodler.row = 0;
-			}
-		}
-		if(KEY_DOWN_NOW(BUTTON_DOWN))
-		{
-			doodle:wq
-r.row += doodlerSpeed;
-			if (doodler.row > 160 - DOODLER_SIZE)
-			{
-				doodler.row = 160 - DOODLER_SIZE;
-			}
-		}
-		if(KEY_DOWN_NOW(BUTTON_LEFT))
-		{
-			doodler.col -= doodlerSpeed;
-			doodler.facing = LEFT;
-			if (doodler.col < 0)
-			{
-				doodler.col = 0;
-			}
-		}
-		if(KEY_DOWN_NOW(BUTTON_RIGHT))
-		{
-			doodler.col += doodlerSpeed;
-			doodler.facing = RIGHT;
-			if (doodler.col > 240 - INFO_GUTTER_WIDTH - DOODLER_SIZE)
-			{
-				doodler.col = 240 - INFO_GUTTER_WIDTH - DOODLER_SIZE;
-			}
-		}
-		if(KEY_DOWN_NOW(BUTTON_SELECT))
-		{
-			*plives = LIVES_DEFAULT;
-			return GAME;
-		}
-		for (int i = 0; i < NUMENEMIES; i++)
-		{
-			cur = enemies + i;
-			cur->row = cur->row + cur->drow;
-			cur->col = cur->col + cur->dcol;
-			if(cur->row < 0)
-			{
-				cur->row = 0;
-				cur->drow=-cur->drow;
-			}
-			if(cur->row > 160 - ENEMY_SIZE)
-			{
-				cur->row = 160 - ENEMY_SIZE;
-				cur->drow=-cur->drow;
-			}
-
-			if(cur->col < 0)
-			{
-				cur->col = 0;
-				cur->dcol = -cur->dcol;
-			}
-			if(cur->col > 240 - INFO_GUTTER_WIDTH - ENEMY_SIZE)
-			{
-				cur->col = 240 - INFO_GUTTER_WIDTH - ENEMY_SIZE;
-				cur->dcol =-cur->dcol;
-			}
-		}
-
-		for (int i = 0; i < NUMENEMIES; i++)
-		{
-			if(enemyCollision(doodler, enemies[i]))
-			{
-				if (*plives)
-				{
-					*plives -= 1;
-					return GAME;
-				}
-				else
-				{
-					return LOSE;
-				}
-			}
-		}
-
-		if(jetpackCollision(doodler, sJetpack))
-		{
-			return WIN;
-		}
-
-
-		waitForVblank();
-
-
-		drawRect(oldDoodler.row, oldDoodler.col, DOODLER_SIZE, DOODLER_SIZE, WHITE);
-		drawDoodler(doodler);
-		oldDoodler = doodler;
-		for (int i = 0; i < NUMENEMIES; i++)
-		{
-			drawRect(oldEnemies[i].row, oldEnemies[i].col, ENEMY_SIZE, ENEMY_SIZE, WHITE);
-		}
-		for (int i = 0; i < NUMENEMIES; i++)
-		{
-			drawEnemy(enemies[i]);
-			oldEnemies[i] = enemies[i];
-		}
-
-		drawJetpack(sJetpack);
-*/
-//	}
-//    return 1;
-//}
-
 void end(){
 	REG_DISPCNT = MODE3 | BG2_ENABLE;
 	setColor(BLACK);
@@ -302,9 +131,9 @@ void end(){
 	drawString(30, 70, "Your Score: ", WHITE);
 	drawString(30, 160, score_buffer, WHITE);
 	drawImage3(70, 100, GOKU_DEAD_WIDTH, GOKU_DEAD_HEIGHT, goku_dead);
-	drawString(132, 45, "Press Start to Play Again", WHITE);
+	drawString(132, 45, "Press Select to Play Again", WHITE);
 
-	while(!KEY_DOWN_NOW(BUTTON_START));
-	while(KEY_DOWN_NOW(BUTTON_START));
+	while(!KEY_DOWN_NOW(BUTTON_SELECT));
+	while(KEY_DOWN_NOW(BUTTON_SELECT));
 }
 
