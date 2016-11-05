@@ -101,55 +101,51 @@ int game() {
 	int isValidDash = 0;
 	while(1) {
 		player.row += 1; 	//GRAVITY
-        if (player.row > 160 - GOKU_STAND_HEIGHT) player.row = 160 - GOKU_STAND_HEIGHT;
+
+        	if (player.row > 160 - GOKU_STAND_HEIGHT) player.row = 160 - GOKU_STAND_HEIGHT;
 		if (player.row < 0) player.row = 0;
 		if (player.col < 0) player.col = 0;
 		if (player.col > 240 - GOKU_RUN1_HEIGHT) player.col = 240 - GOKU_RUN1_HEIGHT;
 
-        
 		if (!KEY_DOWN_NOW(BUTTONS)) {
 			player.stance = STAND;
 		}
 		
-        if (KEY_DOWN_NOW(BUTTON_START)) {
+       		if (KEY_DOWN_NOW(BUTTON_START)) {
 			return END;
 		} 
-        
-        if (KEY_DOWN_NOW(BUTTON_UP) && (isValidJump == 0) && (player.doubleJump >0)) {
+        	if (KEY_DOWN_NOW(BUTTON_UP) && (isValidJump == 0) && (player.doubleJump >0)) {
 			player.stance = JUMP;
 			player.row -= GOKU_STAND_HEIGHT;
 			player.doubleJump -=1;
-
 		} 
         
-        if (KEY_DOWN_NOW(BUTTON_DOWN)) {
+       		if (KEY_DOWN_NOW(BUTTON_DOWN)) {
 			player.row += PLAYER_SPEED;
 		} 
         
-        if(KEY_DOWN_NOW(BUTTON_LEFT)) {
+        	if(KEY_DOWN_NOW(BUTTON_LEFT)) {
 			player.stance = RUN;
 			player.facing = LEFT;
 			player.col -= PLAYER_SPEED;
 		} 
         
-        if (KEY_DOWN_NOW(BUTTON_RIGHT)) {
+        	if (KEY_DOWN_NOW(BUTTON_RIGHT)) {
 			player.stance = RUN;
 			player.facing = RIGHT;
 			player.col += PLAYER_SPEED;
 		} 
         
-        if (KEY_DOWN_NOW(BUTTON_A) && (isValidDash == 0)) {
+        	if (KEY_DOWN_NOW(BUTTON_A) && (isValidDash == 0)) {
 			player.stance = DASH;
 			if (player.facing == LEFT) {
 				player.col -= DASH_LENGTH;
-                player.row += (oldPlayer.height - GOKU_DASH_HEIGHT) + oldPlayer.row;
+                		player.row += (oldPlayer.height - GOKU_DASH_HEIGHT) + oldPlayer.row;
 			} else if (player.facing == RIGHT) {
 				player.col += DASH_LENGTH;
-                player.row += (oldPlayer.height - GOKU_DASH_HEIGHT) + oldPlayer.row;
+                		player.row += (oldPlayer.height - GOKU_DASH_HEIGHT) + oldPlayer.row;
 			}
 		}
-        
-         
 		for (int i = 0;i<num_plat;i++) {
 			if (checkCollision(player, platforms[i])) {
 				player.row = platforms[i].row;

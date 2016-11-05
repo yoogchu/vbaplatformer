@@ -144,10 +144,10 @@ void waitForVblank() {
 	while(SCANLINECOUNTER < 160);
 }
 int checkCollision(PLAYER player, PLATFORM platform) {
-	if ( (player.row < (platform.col + platform.width)) && ((player.row + player.height) > platform.row) ) {
-		if ( (player.col < (platform.col + platform.width)) && ((player.col + player.width) > platform.col) ) {
-			return 1;
-		}
+//case bonking from bottom
+	if ( (player.row > platform.row + platform.height) && (player.col + player.width > platform.col) &&
+		(player.col + player.width < platform.col + platform.width) ){
+		return 1;
 	}
 	return 0;
 }
@@ -164,13 +164,4 @@ int collision(int aRow, int aCol, int aWidth, int aHeight, int bRow, int bCol, i
 	}
 	return 0;
 }
-
-int enemyCollision(DOODLER doodler, ENEMY theEnemy)
-{
-	return collision(doodler.row, doodler.col, DOODLER_SIZE, DOODLER_SIZE, theEnemy.row, theEnemy.col, ENEMY_SIZE, ENEMY_SIZE);
-}
-
-int jetpackCollision(DOODLER doodler, JETPACK theJetpack)
-{
-	return collision(doodler.row, doodler.col, DOODLER_SIZE, DOODLER_SIZE, theJetpack.row, theJetpack.col, JETPACK_WIDTH, JETPACK_HEIGHT);
 }*/
