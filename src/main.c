@@ -16,6 +16,8 @@
 #include "./images/platform_left.h"
 #include "./images/platform_right.h"
 
+#include "./images/goku_run2.h"
+
 
 
 #define PLAYER_SPEED 2
@@ -82,7 +84,7 @@ int game() {
 //draw platforms
 	int num_plat = (rand()%2)+2;
 	PLATFORM platforms [num_plat];
-	for(int i=0;i<num_plat;i++){
+	for(int i=0;i< 1;i++){
 	//	platforms[i].facing = rand()%3;
 		platforms[i].facing = 0;
 		platforms[i].row = (rand()%120) - PLATFORM_LEFT_HEIGHT;
@@ -151,8 +153,10 @@ int game() {
 			}
 		}
 //collision check
+<<<<<<< HEAD
+/*
 
-		for (int i = 0;i<num_plat;i++) {
+		for (int i = 0;i < 1;i++) {
 			if (checkCollision(player, platforms[i]) == 1) {
 				player.row = platforms[i].row + platforms[i].height;
 				player.doubleJump = 2;
@@ -161,7 +165,7 @@ int game() {
 
 			}
 		}
-
+*/
 
 		isValidJump = KEY_DOWN_NOW(BUTTON_UP);
 		isValidDash = KEY_DOWN_NOW(BUTTON_A);
