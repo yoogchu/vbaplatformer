@@ -110,17 +110,17 @@ typedef struct
 #define INFO_GUTTER_WIDTH 40
 #define DOODLER_SIZE DOODLER32_HEIGHT
 #define ENEMY_SIZE ENEMY_WIDTH
+enum FACING {LEFT, RIGHT, UP};
 
 typedef struct
 {
 	int row;
 	int col;
-	int facing;
+	enum FACING facing;
 	int doubleJump;
 	int dash;
 } PLAYER;
 
-enum {LEFT, RIGHT, UP};
 
 typedef struct
 {
