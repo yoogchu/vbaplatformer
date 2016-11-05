@@ -111,7 +111,7 @@ typedef struct
 #define DOODLER_SIZE DOODLER32_HEIGHT
 #define ENEMY_SIZE ENEMY_WIDTH
 enum FACING {LEFT, RIGHT};
-enum STANCE {UP, RUN, STAND, DASH};
+enum STANCE {JUMP, RUN, STAND, DASH};
 
 typedef struct
 {

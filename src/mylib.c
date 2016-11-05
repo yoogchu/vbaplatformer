@@ -1,4 +1,9 @@
 #include "mylib.h"
+#include "./images/goku_dash1.h"
+#include "./images/goku_jump1.h"
+#include "./images/goku_run1.h"
+#include "./images/goku_stand.h"
+ 
 u16* videoBuffer = (u16*) 0x6000000;
 
 // set pixel (r,c) to a color
@@ -21,16 +26,30 @@ void drawImage3(int r, int c, int width, int height, const u16* image) {
 		DMA[3].cnt = width | DMA_ON;
 	}
 }
-/*
-void drawPlayer(PLAYER player)
-{
-	if (player.facing == RIGHT)
-	{
-		drawImage3(player.row, player.col, 32, 32, doodler32);
-	} elseif
+
+void drawPlayer(PLAYER player){
+	//CHECK FACE HERE
+
+    if (player.facing == RIGHT){
+	    //CHECK STANCE HERE
+        if (player.stance == DASH) {
+            drawImage3(player.row, player.col, GOKU_DASH1_WIDTH, GOKU_DASH1_HEIGHT, goku_dash1);
+	    }
+        else if (player.stance == JUMP) {
+            drawImage3(player.row, player.col, GOKU_JUMP1_WIDTH, GOKU_JUMP1_HEIGHT, goku_jump1);
+	    }
+        else if (player.stance == RUN) {
+            drawImage3(player.row, player.col, GOKU_RUN1_WIDTH, GOKU_RUN1_HEIGHT, goku_run1);
+	    } 
+        else if (player.stance == STAND) {
+            drawImage3(player.row, player.col, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, goku_stand);
+	    }
+  
+    } 
 
 }
 
+/*
 void drawEnemy(ENEMY sEnemy)
 {
 	drawImage3(sEnemy.row, sEnemy.col, 28, 28, enemy);
