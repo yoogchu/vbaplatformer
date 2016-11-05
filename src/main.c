@@ -1,33 +1,32 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "mylib.h"
 #include "text.h"
-#include "goku_main.h"
+#include "./images/goku_main.h"
+#include "./images/goku_dead.h"
 
-#define NUMENEMIES 4
-#define DOODLER_SPEED_DEFAULT 2
-#define LIVES_DEFAULT 3
+#define PLAYER_SPEED 2
+#define NUMBER_JUMPS 2
 
 enum {START, GAME, END};
 
 void start();
 int game();
 void end();
+char score_buffer[8];
 
-int main()
-{
+int main() {
 	int state = START;
-	int lives = LIVES_DEFAULT;
-	while(1)
-	{
-		switch(state)
-		{
+	while(1) {
+		switch(state) {
 			case START:
-				start(&lives);
+				sprintf(score_buffer, "%i", 0);
+				start();
 				state = END;
 				break;
 
 			case GAME:
-				state = game(&lives);
+				state = game();
 				break;
 
 			case END:
@@ -39,38 +38,33 @@ int main()
 				break;
 		}
 	}
-
 }
 
-void start(int* plives){
+void start() {
 	REG_DISPCNT = MODE3 | BG2_ENABLE;
 	setColour(BLACK);
 	drawString(20, 90, "GET HIGH", WHITE);
 	
-    drawImage3(160 - GOKU_MAIN_HEIGHT,0, GOKU_MAIN_WIDTH, GOKU_MAIN_HEIGHT, goku_main);    
+    	drawImage3(160 - GOKU_MAIN_HEIGHT,0, GOKU_MAIN_WIDTH, GOKU_MAIN_HEIGHT, goku_main);    
 	drawString(50, 45, "Goku wants to get high!", WHITE);
 	drawString(75, 60, "Press Start to Play", WHITE);
-
-	*plives = LIVES_DEFAULT;
 
 	while(!KEY_DOWN_NOW(BUTTON_START));
 	while(KEY_DOWN_NOW(BUTTON_START));
 }
 
-int game(int* plives){
+int game(){
 	REG_DISPCNT = MODE3 | BG2_ENABLE;
 	setColour(BLACK);
 	drawRect(0, 0, 240 - INFO_GUTTER_WIDTH, 160, WHITE);
 	drawString(0, 240 - INFO_GUTTER_WIDTH, "LIVES:", WHITE);
-	drawChar(10, 240 - INFO_GUTTER_WIDTH, *plives + NUMERAL_OFFSET, WHITE);
+//	drawChar(10, 240 - INFO_GUTTER_WIDTH, *plives + NUMERAL_OFFSET, WHITE);
 
 /*
 	DOODLER doodler = {160 - DOODLER_SIZE, 240 - INFO_GUTTER_WIDTH - DOODLER_SIZE, LEFT};
 	DOODLER oldDoodler = doodler;
 	int doodlerSpeed = DOODLER_SPEED_DEFAULT;
 	JETPACK sJetpack = {rand()%50, rand()%50};
-
-
 
 	ENEMY enemies [NUMENEMIES];
 	ENEMY oldEnemies [NUMENEMIES];
@@ -244,8 +238,10 @@ r.row += doodlerSpeed;
 
 void end(){
 	REG_DISPCNT = MODE3 | BG2_ENABLE;
-	setColour(GREEN);
-	drawString(20, 85, "YOU WIN! :)", WHITE);
+	setColour(BLACK);
+	drawString(20, 85, "Game Over", RED);
+	drawString(30, 85, "Your Score: ", WHITE);
+	drawString(30, 160, score_buffer, WHITE);
 	drawString(132, 45, "Press Start to Play Again", WHITE);
 
 	while(!KEY_DOWN_NOW(BUTTON_START));

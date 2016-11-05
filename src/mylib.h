@@ -116,6 +116,8 @@ typedef struct
 	int row;
 	int col;
 	int facing;
+	int doubleJump;
+	int dash;
 } PLAYER;
 
 enum {LEFT, RIGHT, UP};

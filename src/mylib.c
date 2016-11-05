@@ -1,21 +1,19 @@
 #include "mylib.h"
 u16* videoBuffer = (u16*) 0x6000000;
 
-// A function to set pixel (r, c) to the colour passed in.
-void setPixel(int r, int c, u16 colour)
-{
-	videoBuffer[OFFSET(r, c, 240)] = colour;
+// set pixel (r,c) to a color
+void setPixel(int r, int c, u16 color) {
+	videoBuffer[OFFSET(r, c, 240)] = color;
 }
 
-void drawImage(const unsigned short arr[])
-{
+// draw an image using dma
+void drawImage(const unsigned short arr[]) {
 	DMA[3].src = arr;
 	DMA[3].dst = videoBuffer;
 	DMA[3].cnt = (240*160) | DMA_ON;
 }
 
-void drawImage3(int r, int c, int width, int height, const u16* image)
-{
+void drawImage3(int r, int c, int width, int height, const u16* image) {
 	for (int i = 0; i < height; i++)
 	{
 		DMA[3].src = &image[OFFSET(i, 0, width)];
