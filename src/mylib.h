@@ -3,12 +3,13 @@ typedef unsigned short u16;
 typedef unsigned int u32;
 
 // display
-#define OFFSET(r,c, numcols) ((r)*(numcols) + (c))
+
 extern u16* videoBuffer;
 #define SCANLINECOUNTER *(volatile unsigned short *)0x4000006
+#define OFFSET(row, col, rowlen)  ((row)*(rowlen)+(col))
 #define REG_DISPCNT *(u16*) 0x4000000
 #define MODE3 3
-#define BG2_ENABLE (1<<10) // bit 10
+#define BG2_ENABLE (1<<10)
 
 
 // color
@@ -69,30 +70,30 @@ typedef struct
 #define REG_DMA3DAD         *(vu32*)0x40000D8  /* destination address*/
 #define REG_DMA3CNT         *(vu32*)0x40000DC  /* control register*/
 
-/* Defines*/
+// define
 #define DMA_CHANNEL_0 0
 #define DMA_CHANNEL_1 1
 #define DMA_CHANNEL_2 2
 #define DMA_CHANNEL_3 3
 
-/* Destination address flags */
+// destination address flags
 #define DMA_DESTINATION_INCREMENT (0 << 21)
 #define DMA_DESTINATION_DECREMENT (1 << 21)
 #define DMA_DESTINATION_FIXED (2 << 21)
 #define DMA_DESTINATION_RESET (3 << 21)
 
-/* Source address flags */
+// source address flags
 #define DMA_SOURCE_INCREMENT (0 << 23)
 #define DMA_SOURCE_DECREMENT (1 << 23)
 #define DMA_SOURCE_FIXED (2 << 23)
 
 #define DMA_REPEAT (1 << 25)
 
-/* How much to copy flags */
+// flags / how much to copy
 #define DMA_16 (0 << 26)
 #define DMA_32 (1 << 26)
 
-/* When to DMA flags */
+// when to dma flags
 #define DMA_NOW (0 << 28)
 #define DMA_AT_VBLANK (1 << 28)
 #define DMA_AT_HBLANK (2 << 28)
@@ -104,45 +105,35 @@ typedef struct
 
 #define START_ON_FIFO_EMPTY 0x30000000
 
-// ==DMA==
 
-// **GAME**
+// game
 #define INFO_GUTTER_WIDTH 40
 #define DOODLER_SIZE DOODLER32_HEIGHT
 #define ENEMY_SIZE ENEMY_WIDTH
-/*
+
 typedef struct
 {
 	int row;
 	int col;
 	int facing;
-} DOODLER;
+} PLAYER;
 
-enum {LEFT, RIGHT};
-
-typedef struct
-{
-	int row;
-	int col;
-	int drow;
-	int dcol;
-} ENEMY;
+enum {LEFT, RIGHT, UP};
 
 typedef struct
 {
 	int row;
 	int col;
-} JETPACK;
-*/
-// ==GAME==
+	int length;
+} PLATFORM;
 
 
 // **Prototypes**
 void drawImage(const unsigned short arr[]);
 void drawImage3(int r, int c, int width, int height, const u16* image);
-//void drawDoodler(DOODLER doodler);
-//void drawEnemy(ENEMY sEnemy);
-//void drawJetpack(JETPACK sJetpack);
+
+void drawPlayer(PLAYER player);
+void drawPlatform(PLATFORM platform);
 
 void setColour(u16 colour);
 void clearScreen();
@@ -157,6 +148,5 @@ void drawHollowRect(int r, int c, int width, int height, u16 colour);
 void waitForVblank();
 
 //int collision(int aRow, int aCol, int aWidth, int aHeight, int bRow, int bCol, int bWidth, int bHeight);
-//nt enemyCollision(DOODLER doodler, ENEMY theEnemy);
-//t jetpackCollision(DOODLER doodler, JETPACK theJetpack);
-// ==Prototypes==
+int death(PLAYER player);
+
