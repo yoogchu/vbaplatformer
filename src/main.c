@@ -69,11 +69,14 @@ int game() {
 	setColor(BLACK);
 
 	PLAYER player = {160 - GOKU_STAND_HEIGHT, 0, NUMBER_JUMPS, 1, RIGHT, STAND};
-	waitForVblank();
+	PLAYER oldPlayer = player;
 
+    waitForVblank();
 	drawPlayer(player);
-	waitForVblank();
 
+	waitForVblank();
+    
+    
 	while(1) {
 		player.row += 1;
 		if (player.row > 160 - GOKU_STAND_HEIGHT) player.row = 160 - GOKU_STAND_HEIGHT;
@@ -108,7 +111,9 @@ int game() {
 			if (player.col > 240 - GOKU_RUN1_HEIGHT) player.col = 240 - GOKU_RUN1_HEIGHT;
 		}
 		waitForVblank();
-		drawPlayer(player);
+		drawRect(oldPlayer.row, oldPlayer.col, GOKU_STAND_HEIGHT, GOKU_STAND_WIDTH, BLACK);
+        drawPlayer(player);
+        oldPlayer = player;
 	}
 	
 	return 1;
