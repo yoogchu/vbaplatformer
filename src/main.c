@@ -68,7 +68,7 @@ int game() {
 	REG_DISPCNT = MODE3 | BG2_ENABLE;
 	setColor(BLACK);
 
-	PLAYER player = {160 - GOKU_STAND_HEIGHT, 0, 2, 1, RIGHT, STAND};
+	PLAYER player = {160 - GOKU_STAND_HEIGHT + 5, 0, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, 2, 1, RIGHT, STAND};
 	PLAYER oldPlayer = player;
 
     	waitForVblank();
@@ -85,6 +85,9 @@ int game() {
 		if (player.col < 0) player.col = 0;
 		if (player.col > 240 - GOKU_RUN1_HEIGHT) player.col = 240 - GOKU_RUN1_HEIGHT;
 
+		if (!KEY_DOWN_NOW(BUTTONS)) {
+			player.stance = STAND;
+		}
 		if (KEY_DOWN_NOW(BUTTON_START)) {
 			return END;
 		} if (KEY_DOWN_NOW(BUTTON_UP) && (isValidJump == 0) && (player.doubleJump >0)) {

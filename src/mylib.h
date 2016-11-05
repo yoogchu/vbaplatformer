@@ -123,6 +123,8 @@ typedef struct
 typedef struct {
 	int row;
 	int col;
+	int width;
+	int height;
 	int doubleJump;
 	int dash;
 	int facing;
@@ -137,7 +139,9 @@ typedef struct {
 	int width;
 	int height;
 	int num;
+	int facing;
 } PLATFORM;
+	enum FACING_PLAT {LEFTP, RIGHTP, UP};
 
 
 // **Prototypes**

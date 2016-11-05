@@ -7,6 +7,9 @@
 #include "./images/goku_jump1L.h"
 #include "./images/goku_dash4.h"
 #include "./images/goku_dash4L.h"
+#include "./images/platform_up.h"
+#include "./images/platform_left.h"
+#include "./images/platform_right.h"
  
 u16* videoBuffer = (u16*) 0x6000000;
 
@@ -65,7 +68,16 @@ void drawPlayer(PLAYER player) {
 
 void drawPlatform (PLATFORM platform) {
 	for(int i = 0; i < platform.num; i++) {
-		drawImage3(platform.row, platform.col, , GOKU_STAND_HEIGHT, goku_standL);
+		if (platform.facing == UP) {
+			drawImage3(platform.row, platform.col, PLATFORM_UP_WIDTH, PLATFORM_UP_HEIGHT, platform_up);
+		}
+		else if (platform.facing == LEFTP) {
+			drawImage3(platform.row, platform.col, PLATFORM_LEFT_WIDTH, PLATFORM_LEFT_HEIGHT, platform_left);
+		}
+		else if (platform.facing == RIGHTP) {
+			drawImage3(platform.row, platform.col, PLATFORM_RIGHT_WIDTH, PLATFORM_RIGHT_HEIGHT, platform_right);
+		}
+	}
 }
 void setColor(volatile u16 color)
 {
