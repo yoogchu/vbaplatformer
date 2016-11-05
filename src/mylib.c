@@ -6,17 +6,19 @@
 #include "./images/goku_run1.h"
 #include "./images/goku_run2.h"
 #include "./images/goku_run3.h"
-#include "./images/goku_run4.h"
-#include "./images/goku_run5.h"
-#include "./images/goku_run6.h"
-#include "./images/goku_run7.h"
-#include "./images/goku_run8.h"
-
 #include "./images/goku_run1L.h"
-#include "./images/goku_jump1.h"
-#include "./images/goku_jump1L.h"
-#include "./images/goku_dash4.h"
-#include "./images/goku_dash4L.h"
+#include "./images/goku_run2L.h"
+#include "./images/goku_run3L.h"
+#include "./images/goku_jump.h"
+#include "./images/goku_jumpL.h"
+#include "./images/goku_down.h"
+#include "./images/goku_downL.h"
+#include "./images/goku_dash1.h"
+#include "./images/goku_dash1L.h"
+#include "./images/goku_dash2.h"
+#include "./images/goku_dash2L.h"
+#include "./images/goku_dash3.h"
+#include "./images/goku_dash3L.h"
 #include "./images/platform_up.h"
 #include "./images/platform_left.h"
 #include "./images/platform_right.h"
@@ -43,69 +45,66 @@ void drawImage3(int r, int c, int width, int height, const u16* image) {
 	}
 }
 
-void drawPlayer(PLAYER player) {
+void drawPlayer(PLAYER player, int frame) {
 	//CHECK FACE HERE
  
     if (player.facing == RIGHT) {
 	    //CHECK STANCE HERE
         if (player.stance == DASH) {
-            drawImage3(player.row, player.col, GOKU_DASH4_WIDTH, GOKU_DASH4_HEIGHT, goku_dash4);
-	        player.height = GOKU_DASH4_HEIGHT;
-            player.width = GOKU_DASH4_WIDTH;    
-        }
-        else if (player.stance == JUMP) {
-        	drawImage3(player.row, player.col, GOKU_JUMP1_WIDTH, GOKU_JUMP1_HEIGHT, goku_jump1);
-	 	player.height = GOKU_JUMP1_HEIGHT;
-        	player.width = GOKU_JUMP1_WIDTH; 
-        }
-        else if (player.stance == RUN) {
-		int run = rand()%8;
-		if (run == 0) {
-            	drawImage3(player.row, player.col, GOKU_RUN1_WIDTH, GOKU_RUN1_HEIGHT, goku_run1);
-		} else if(run == 1){
-		drawImage3(player.row, player.col, GOKU_RUN2_WIDTH, GOKU_RUN2_HEIGHT, goku_run2);
-		} else if(run == 2){
-		drawImage3(player.row, player.col, GOKU_RUN3_WIDTH, GOKU_RUN3_HEIGHT, goku_run3);
-		} else if(run == 3){
-		drawImage3(player.row, player.col, GOKU_RUN4_WIDTH, GOKU_RUN4_HEIGHT, goku_run4);
-		} else if(run == 4){
-		drawImage3(player.row, player.col, GOKU_RUN5_WIDTH, GOKU_RUN5_HEIGHT, goku_run5);
-		} else if(run == 5){
-		drawImage3(player.row, player.col, GOKU_RUN6_WIDTH, GOKU_RUN6_HEIGHT, goku_run6);
-		} else if(run == 6){
-		drawImage3(player.row, player.col, GOKU_RUN7_WIDTH, GOKU_RUN7_HEIGHT, goku_run7);
-		} else if(run == 7){
-		drawImage3(player.row, player.col, GOKU_RUN8_WIDTH, GOKU_RUN8_HEIGHT, goku_run8);
+            	drawImage3(player.row, player.col, GOKU_DASH1_WIDTH, GOKU_DASH1_HEIGHT, goku_dash1);
+	        player.height = GOKU_DASH1_HEIGHT;
+            	player.width = GOKU_DASH1_WIDTH;    
+        } else if (player.stance == JUMP) {
+        	drawImage3(player.row, player.col, GOKU_JUMP_WIDTH, GOKU_JUMP_HEIGHT, goku_jump);
+	 	player.height = GOKU_JUMP_HEIGHT;
+        	player.width = GOKU_JUMP_WIDTH; 
+        } else if (player.stance == RUN) {
+		if (frame == 0) {
+            		drawImage3(player.row, player.col, GOKU_RUN1_WIDTH, GOKU_RUN1_HEIGHT, goku_run1);
+		} else if(frame == 1){
+			drawImage3(player.row, player.col, GOKU_RUN2_WIDTH, GOKU_RUN2_HEIGHT, goku_run2);
+		} else if(frame == 2){
+			drawImage3(player.row, player.col, GOKU_RUN3_WIDTH, GOKU_RUN3_HEIGHT, goku_run3);
 		}
 	        player.height = GOKU_RUN1_HEIGHT;
-            player.width = GOKU_RUN1_WIDTH;
-        } 
-        else if (player.stance == STAND) {
-            drawImage3(player.row, player.col, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, goku_stand);
+        	player.width = GOKU_RUN1_WIDTH;
+        } else if (player.stance == STAND) {
+        	drawImage3(player.row, player.col, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, goku_stand);
 	        player.height = GOKU_STAND_HEIGHT;
-            player.width = GOKU_STAND_WIDTH; 
-        }
+        	player.width = GOKU_STAND_WIDTH; 
+        } else if (player.stance == DOWN) {
+		drawImage3(player.row, player.col, GOKU_DOWN_WIDTH, GOKU_DOWN_HEIGHT, goku_down);
+	        player.height = GOKU_DOWN_HEIGHT;
+        	player.width = GOKU_DOWN_WIDTH;
+	}
     } else {
 	 if (player.stance == DASH) {
-            drawImage3(player.row, player.col, GOKU_DASH4L_WIDTH, GOKU_DASH4L_HEIGHT, goku_dash4L);
-            player.height = GOKU_DASH4L_HEIGHT;
-            player.width = GOKU_DASH4L_WIDTH; 
-        }
-        else if (player.stance == JUMP) {
-            drawImage3(player.row, player.col, GOKU_JUMP1_WIDTH, GOKU_JUMP1_HEIGHT, goku_jump1L);
-	        player.height = GOKU_JUMP1_HEIGHT;
-            player.width = GOKU_JUMP1_WIDTH; 
-        }
-        else if (player.stance == RUN) {
-            drawImage3(player.row, player.col, GOKU_RUN1_WIDTH, GOKU_RUN1_HEIGHT, goku_run1L);
+            drawImage3(player.row, player.col, GOKU_DASH1L_WIDTH, GOKU_DASH1L_HEIGHT, goku_dash1L);
+            player.height = GOKU_DASH1L_HEIGHT;
+            player.width = GOKU_DASH1L_WIDTH; 
+        } else if (player.stance == JUMP) {
+            drawImage3(player.row, player.col, GOKU_JUMP_WIDTH, GOKU_JUMP_HEIGHT, goku_jumpL);
+	        player.height = GOKU_JUMP_HEIGHT;
+            player.width = GOKU_JUMP_WIDTH; 
+        } else if (player.stance == RUN) {
+		if (frame == 0) {
+            		drawImage3(player.row, player.col, GOKU_RUN1_WIDTH, GOKU_RUN1_HEIGHT, goku_run1L);
+		} else if(frame == 1){
+			drawImage3(player.row, player.col, GOKU_RUN2_WIDTH, GOKU_RUN2_HEIGHT, goku_run2L);
+		} else if(frame == 2){
+			drawImage3(player.row, player.col, GOKU_RUN3_WIDTH, GOKU_RUN3_HEIGHT, goku_run3L);
+		}
 	        player.height = GOKU_RUN1_HEIGHT;
-            player.width = GOKU_RUN1_WIDTH; 
-        } 
-        else if (player.stance == STAND) {
+            	player.width = GOKU_RUN1_WIDTH; 
+        } else if (player.stance == STAND) {
             drawImage3(player.row, player.col, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, goku_standL);
 	        player.height = GOKU_STAND_HEIGHT;
             player.width = GOKU_STAND_WIDTH; 
-        }
+        } else if (player.stance == DOWN) {
+		drawImage3(player.row, player.col, GOKU_DOWN_WIDTH, GOKU_DOWN_HEIGHT, goku_downL);
+	        player.height = GOKU_DOWN_HEIGHT;
+        	player.width = GOKU_DOWN_WIDTH;
+	}
 	} 
 } 
 

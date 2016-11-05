@@ -11,18 +11,20 @@ PROGNAME = GOKU_JUMP
 
 # The object files you want to compile into your program
 # This should be a space (SPACE!) separated list of .o files
-OFILES = main.o mylib.o text.o font.o ./images/goku_standL.o ./images/goku_dead.o ./images/goku_main.o \
-./images/goku_stand.o ./images/goku_run1.o ./images/goku_run1L.o ./images/goku_jump1.o ./images/goku_jump1L.o \
-./images/goku_dash4.o ./images/goku_dash4L.o ./images/platform_up.o ./images/platform_left.o ./images/platform_right.o \
-./images/goku_run2.o ./images/goku_run3.o ./images/goku_run4.o ./images/goku_run5.o ./images/goku_run6.o \
-./images/goku_run7.o ./images/goku_run8.o
+OFILES = main.o mylib.o text.o font.o ./images/goku_stand.o ./images/goku_standL.o ./images/goku_dead.o ./images/goku_main.o \
+./images/goku_run1.o ./images/goku_run1L.o ./images/goku_run2.o ./images/goku_run2L.o \
+./images/goku_run3.o ./images/goku_run3L.o images/goku_jump.o ./images/goku_jumpL.o \
+./images/goku_dash1.o ./images/goku_dash1L.o ./images/goku_dash2.o ./images/goku_dash2L.o \
+./images/goku_dash3.o ./images/goku_dash3L.o ./images/platform_up.o ./images/platform_left.o ./images/platform_right.o \
+./images/goku_down.o ./images/goku_downL.o
 
 # The header files you have created.
 # This is necessary to determine when to recompile for files.
 # This should be a space (SPACE!) separated list of .h files
-HFILES = mylib.h text.h goku_main.h goku_standL.h goku_dead.h goku_stand.h goku_jump1.h goku_jump1L.h goku_run1.h \
-goku_run1L.h goku_run2.h goku_dash4.h goku_dash4L.h platform_up.h platform_left.h platform_right.h \
-goku_run3.h goku_run4.h goku_run5.h goku_run6.h goku_run7.h goku_run8.h
+HFILES = mylib.h text.h goku_main.h goku_dead.h goku_stand.h goku_standL.h \
+goku_run1.h goku_run1L.h goku_run2.h goku_run2L.h goku_run3.h goku_run3L.h \
+goku_jump.h goku_jumpL.h goku_dash1.h goku_dash1L.h goku_dash2.h goku_dash2L.h goku_dash3.h goku_dash3L.h \
+goku_down.h goku_downL.h platform_up.h platform_left.h platform_right.h
 
 ################################################################################
 # These are various settings used to make the GBA toolchain work

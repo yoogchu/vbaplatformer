@@ -5,18 +5,10 @@
 #include "./images/goku_main.h"
 #include "./images/goku_dead.h"
 #include "./images/goku_stand.h"
-#include "./images/goku_standL.h"
-#include "./images/goku_run1.h"
-#include "./images/goku_run1L.h"
-#include "./images/goku_jump1.h"
-#include "./images/goku_jump1L.h"
-#include "./images/goku_dash4.h"
-#include "./images/goku_dash4L.h"
 #include "./images/platform_up.h"
 #include "./images/platform_left.h"
 #include "./images/platform_right.h"
 
-#include "./images/goku_run2.h"
 
 
 
@@ -77,10 +69,9 @@ int game() {
 	PLAYER player = {160 - GOKU_STAND_HEIGHT + 5, 0, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, 2, 1, RIGHT, STAND};
 	PLAYER oldPlayer = player;
 
-    	waitForVblank();
-	drawPlayer(player);
+    	
+	drawPlayer(player, 0);
 
-	waitForVblank();
 //draw platforms
 	int num_plat = (rand()%2)+2;
 	PLATFORM platforms [num_plat];
@@ -104,13 +95,15 @@ int game() {
 	}  	
 	int isValidJump = 0;
 	int isValidDash = 0;
+	int frame = 0;
 	while(1) {
 		player.row += 1; 	//GRAVITY
+		frame+=1;
 
         	if (player.row > 160 - GOKU_STAND_HEIGHT) player.row = 160 - GOKU_STAND_HEIGHT;
 		if (player.row < 0) player.row = 0;
 		if (player.col < 0) player.col = 0;
-		if (player.col > 240 - GOKU_RUN1_HEIGHT) player.col = 240 - GOKU_RUN1_HEIGHT;
+		if (player.col > 240 - GOKU_STAND_WIDTH) player.col = 240 - GOKU_STAND_WIDTH;
 
 		if (!KEY_DOWN_NOW(BUTTONS)) {
 			player.stance = STAND;
@@ -127,6 +120,7 @@ int game() {
 		} 
         
        		if (KEY_DOWN_NOW(BUTTON_DOWN)) {
+			player.stance = DOWN;
 			player.row += PLAYER_SPEED;
 		} 
         
@@ -153,7 +147,6 @@ int game() {
 			}
 		}
 //collision check
-<<<<<<< HEAD
 /*
 
 		for (int i = 0;i < 1;i++) {
@@ -166,14 +159,14 @@ int game() {
 			}
 		}
 */
-
 		isValidJump = KEY_DOWN_NOW(BUTTON_UP);
 		isValidDash = KEY_DOWN_NOW(BUTTON_A);
-		waitForVblank();
 		drawRect(oldPlayer.row, oldPlayer.col, oldPlayer.width, oldPlayer.height, BLACK);
 
-        	drawPlayer(player);
+        	drawPlayer(player, frame);
         	oldPlayer = player;
+		waitForVblank();
+		if (frame == 2) frame = -1;
 	}
 	return 1;
 }

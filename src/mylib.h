@@ -123,7 +123,7 @@ typedef struct {
    	int stance;
 } PLAYER;
 	enum FACING {LEFT, RIGHT};
-	enum STANCE {JUMP, RUN, STAND, DASH};
+	enum STANCE {JUMP, RUN, STAND, DASH, DOWN};
 
 typedef struct {
 	int row;
@@ -138,7 +138,7 @@ typedef struct {
 void drawImage(const unsigned short arr[]);
 void drawImage3(int r, int c, int width, int height, const u16* image);
 
-void drawPlayer(PLAYER player);
+void drawPlayer(PLAYER player, int frame);
 void drawPlatform(PLATFORM platform);
 
 void setColor(u16 color);
