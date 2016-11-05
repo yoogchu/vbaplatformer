@@ -42,29 +42,45 @@ void drawPlayer(PLAYER player) {
 	    //CHECK STANCE HERE
         if (player.stance == DASH) {
             drawImage3(player.row, player.col, GOKU_DASH4_WIDTH, GOKU_DASH4_HEIGHT, goku_dash4);
-	    }
+	        player.height = GOKU_DASH4_HEIGHT;
+            player.width = GOKU_DASH4_WIDTH;    
+        }
         else if (player.stance == JUMP) {
             drawImage3(player.row, player.col, GOKU_JUMP1_WIDTH, GOKU_JUMP1_HEIGHT, goku_jump1);
-	    }
+	        player.height = GOKU_JUMP1_HEIGHT;
+            player.width = GOKU_JUMP1_WIDTH; 
+        }
         else if (player.stance == RUN) {
             drawImage3(player.row, player.col, GOKU_RUN1_WIDTH, GOKU_RUN1_HEIGHT, goku_run1);
-	    } 
+	        player.height = GOKU_RUN1_HEIGHT;
+            player.width = GOKU_RUN1_WIDTH; 
+        } 
         else if (player.stance == STAND) {
             drawImage3(player.row, player.col, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, goku_stand);
-	    }
+	        player.height = GOKU_STAND_HEIGHT;
+            player.width = GOKU_STAND_WIDTH; 
+        }
     } else {
 	 if (player.stance == DASH) {
             drawImage3(player.row, player.col, GOKU_DASH4L_WIDTH, GOKU_DASH4L_HEIGHT, goku_dash4L);
-	    }
+            player.height = GOKU_DASH4L_HEIGHT;
+            player.width = GOKU_DASH4L_WIDTH; 
+        }
         else if (player.stance == JUMP) {
             drawImage3(player.row, player.col, GOKU_JUMP1_WIDTH, GOKU_JUMP1_HEIGHT, goku_jump1L);
-	    }
+	        player.height = GOKU_JUMP1_HEIGHT;
+            player.width = GOKU_JUMP1_WIDTH; 
+        }
         else if (player.stance == RUN) {
             drawImage3(player.row, player.col, GOKU_RUN1_WIDTH, GOKU_RUN1_HEIGHT, goku_run1L);
-	    } 
+	        player.height = GOKU_RUN1_HEIGHT;
+            player.width = GOKU_RUN1_WIDTH; 
+        } 
         else if (player.stance == STAND) {
             drawImage3(player.row, player.col, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, goku_standL);
-	    }
+	        player.height = GOKU_STAND_HEIGHT;
+            player.width = GOKU_STAND_WIDTH; 
+        }
 	} 
 } 
 
