@@ -21,6 +21,7 @@
 #define PLAYER_SPEED 2
 #define GOKU_STAND_HEIGHT 48
 #define DASH_LENGTH 50
+#define GOKU_DASH_HEIGHT 33
 
 enum {START, GAME, END};
 
@@ -118,8 +119,10 @@ int game() {
 			player.stance = DASH;
 			if (player.facing == LEFT) {
 				player.col -= DASH_LENGTH;
+                player.row += (oldPlayer.height - GOKU_DASH_HEIGHT) + oldPlayer.row;
 			} else if (player.facing == RIGHT) {
 				player.col += DASH_LENGTH;
+                player.row += (oldPlayer.height - GOKU_DASH_HEIGHT) + oldPlayer.row;
 			}
 			if (player.col < 0) player.col = 0;
 			if (player.col > 240 - GOKU_RUN1_HEIGHT) player.col = 240 - GOKU_RUN1_HEIGHT;
@@ -128,7 +131,8 @@ int game() {
 		isValidJump = KEY_DOWN_NOW(BUTTON_UP);
 		isValidDash = KEY_DOWN_NOW(BUTTON_A);
 		waitForVblank();
-		drawRect(oldPlayer.row, oldPlayer.col, player.width, player.height, BLACK);
+		drawRect(oldPlayer.row, oldPlayer.col, oldPlayer.width, oldPlayer.height, BLACK);
+
 		//setColor(BLACK);
         	drawPlayer(player);
         	oldPlayer = player;
