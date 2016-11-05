@@ -22,7 +22,7 @@ int main() {
 			case START:
 				sprintf(score_buffer, "%i", 0);
 				start();
-				state = END;
+				state = GAME;
 				break;
 
 			case GAME:
@@ -42,7 +42,7 @@ int main() {
 
 void start() {
 	REG_DISPCNT = MODE3 | BG2_ENABLE;
-	setColour(BLACK);
+	setColor(BLACK);
 	drawString(20, 90, "GET HIGH", GREEN);
 	
     	drawImage3(160 - GOKU_MAIN_HEIGHT,0, GOKU_MAIN_WIDTH, GOKU_MAIN_HEIGHT, goku_main);    
@@ -55,7 +55,7 @@ void start() {
 
 int game(){
 	REG_DISPCNT = MODE3 | BG2_ENABLE;
-	setColour(BLACK);
+	setColor(CYAN);
 	drawRect(0, 0, 240 - INFO_GUTTER_WIDTH, 160, WHITE);
 	drawString(0, 240 - INFO_GUTTER_WIDTH, "LIVES:", WHITE);
 //	drawChar(10, 240 - INFO_GUTTER_WIDTH, *plives + NUMERAL_OFFSET, WHITE);
