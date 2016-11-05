@@ -238,7 +238,7 @@ r.row += doodlerSpeed;
 
 void end(){
 	REG_DISPCNT = MODE3 | BG2_ENABLE;
-	setColour(BLACK);
+	setColor(BLACK);
 	drawString(20, 85, "Game Over", RED);
 	drawString(30, 70, "Your Score: ", WHITE);
 	drawString(30, 160, score_buffer, WHITE);

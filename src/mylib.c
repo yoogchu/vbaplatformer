@@ -46,52 +46,52 @@ void drawJetpack(JETPACK sJetpack)
 }
 
 */
-void setColour(volatile u16 colour)
+void setColor(volatile u16 color)
 {
-	DMA[3].src = &colour;
+	DMA[3].src = &color;
 	DMA[3].dst = videoBuffer;
 	DMA[3].cnt = (240*160) | DMA_SOURCE_FIXED | DMA_ON;
 }
 
 void clearScreen()
 {
-	setColour(BLACK);
+	setColor(BLACK);
 }
 
 // A function to draw a FILLED rectangle starting at (r, c).
-void drawRect(int r, int c, int width, int height, u16 colour)
+void drawRect(int r, int c, int width, int height, u16 color)
 {
     for (int i = 0; i < height; i++)
 	{
-		DMA[3].src = &colour;
+		DMA[3].src = &color;
 		DMA[3].dst = videoBuffer + OFFSET(r+i, c, 240);
 		DMA[3].cnt = width | DMA_SOURCE_FIXED | DMA_ON;
 	}
 }
 
 // A function to draw a HOLLOW rectangle starting at (r, c).
-void drawHollowRect(int r, int c, int width, int height, u16 colour)
+void drawHollowRect(int r, int c, int width, int height, u16 color)
 {
 	int row, col;
 	row = 0;
 	for (col = 0; col < width; col++) {
-		setPixel(r+row, c+col, colour);
+		setPixel(r+row, c+col, color);
 	}
 
 	col = 0;
 	for (row = 1; row < height - 1; row++) {
-		setPixel(r+row, c+col, colour);
+		setPixel(r+row, c+col, color);
 	}
 
 	col = width - 1;
 	for (row = 1; row < height - 1; row++) {
-		setPixel(r+row, c+col, colour);
+		setPixel(r+row, c+col, color);
 	}
 
 
     row = height - 1;
 	for (col = 0; col < width; col++) {
-		setPixel(r+row, c+col, colour);
+		setPixel(r+row, c+col, color);
 	}
 }
 

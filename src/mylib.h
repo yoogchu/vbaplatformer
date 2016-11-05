@@ -137,14 +137,14 @@ void drawImage3(int r, int c, int width, int height, const u16* image);
 void drawPlayer(PLAYER player);
 void drawPlatform(PLATFORM platform);
 
-void setColour(u16 colour);
+void setColor(u16 color);
 void clearScreen();
 
 
-void setPixel(int r, int c, u16 colour);
-void drawRect(int r, int c, int width, int height, u16 colour);
+void setPixel(int r, int c, u16 color);
+void drawRect(int r, int c, int width, int height, u16 color);
 
-void drawHollowRect(int r, int c, int width, int height, u16 colour);
+void drawHollowRect(int r, int c, int width, int height, u16 color);
 
 
 void waitForVblank();
