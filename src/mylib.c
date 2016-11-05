@@ -4,6 +4,14 @@
 #include "./images/goku_stand.h"
 #include "./images/goku_standL.h"
 #include "./images/goku_run1.h"
+#include "./images/goku_run2.h"
+#include "./images/goku_run3.h"
+#include "./images/goku_run4.h"
+#include "./images/goku_run5.h"
+#include "./images/goku_run6.h"
+#include "./images/goku_run7.h"
+#include "./images/goku_run8.h"
+
 #include "./images/goku_run1L.h"
 #include "./images/goku_jump1.h"
 #include "./images/goku_jump1L.h"
@@ -37,6 +45,7 @@ void drawImage3(int r, int c, int width, int height, const u16* image) {
 
 void drawPlayer(PLAYER player) {
 	//CHECK FACE HERE
+ 
     if (player.facing == RIGHT) {
 	    //CHECK STANCE HERE
         if (player.stance == DASH) {
@@ -45,14 +54,31 @@ void drawPlayer(PLAYER player) {
             player.width = GOKU_DASH4_WIDTH;    
         }
         else if (player.stance == JUMP) {
-            drawImage3(player.row, player.col, GOKU_JUMP1_WIDTH, GOKU_JUMP1_HEIGHT, goku_jump1);
-	        player.height = GOKU_JUMP1_HEIGHT;
-            player.width = GOKU_JUMP1_WIDTH; 
+        	drawImage3(player.row, player.col, GOKU_JUMP1_WIDTH, GOKU_JUMP1_HEIGHT, goku_jump1);
+	 	player.height = GOKU_JUMP1_HEIGHT;
+        	player.width = GOKU_JUMP1_WIDTH; 
         }
         else if (player.stance == RUN) {
-            drawImage3(player.row, player.col, GOKU_RUN1_WIDTH, GOKU_RUN1_HEIGHT, goku_run1);
+		int run = rand()%8;
+		if (run == 0) {
+            	drawImage3(player.row, player.col, GOKU_RUN1_WIDTH, GOKU_RUN1_HEIGHT, goku_run1);
+		} else if(run == 1){
+		drawImage3(player.row, player.col, GOKU_RUN2_WIDTH, GOKU_RUN2_HEIGHT, goku_run2);
+		} else if(run == 2){
+		drawImage3(player.row, player.col, GOKU_RUN3_WIDTH, GOKU_RUN3_HEIGHT, goku_run3);
+		} else if(run == 3){
+		drawImage3(player.row, player.col, GOKU_RUN4_WIDTH, GOKU_RUN4_HEIGHT, goku_run4);
+		} else if(run == 4){
+		drawImage3(player.row, player.col, GOKU_RUN5_WIDTH, GOKU_RUN5_HEIGHT, goku_run5);
+		} else if(run == 5){
+		drawImage3(player.row, player.col, GOKU_RUN6_WIDTH, GOKU_RUN6_HEIGHT, goku_run6);
+		} else if(run == 6){
+		drawImage3(player.row, player.col, GOKU_RUN7_WIDTH, GOKU_RUN7_HEIGHT, goku_run7);
+		} else if(run == 7){
+		drawImage3(player.row, player.col, GOKU_RUN8_WIDTH, GOKU_RUN8_HEIGHT, goku_run8);
+		}
 	        player.height = GOKU_RUN1_HEIGHT;
-            player.width = GOKU_RUN1_WIDTH; 
+            player.width = GOKU_RUN1_WIDTH;
         } 
         else if (player.stance == STAND) {
             drawImage3(player.row, player.col, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, goku_stand);
@@ -153,16 +179,3 @@ int checkCollision(PLAYER player, PLATFORM platform) {
 	return 0;
 }
 
-/*//int collisionBufferZone
-int collision(int aRow, int aCol, int aWidth, int aHeight, int bRow, int bCol, int bWidth, int bHeight)
-{
-	if (aRow < (bRow + bHeight) && (aRow + aHeight) > bRow)
-	{
-		if (aCol < (bCol + bWidth) && (aCol + aWidth) > bCol)
-		{
-			return 1;
-		}
-	}
-	return 0;
-}
-}*/

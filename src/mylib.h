@@ -1,11 +1,3 @@
-#include "./images/goku_stand.h"
-#include "./images/goku_standL.h"
-#include "./images/goku_run1.h"
-#include "./images/goku_run1L.h"
-#include "./images/goku_jump1.h"
-#include "./images/goku_jump1L.h"
-#include "./images/goku_dash4.h"
-#include "./images/goku_dash4L.h"
 typedef unsigned short u16;
 typedef unsigned int u32;
 

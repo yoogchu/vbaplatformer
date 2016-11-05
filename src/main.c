@@ -16,6 +16,8 @@
 #include "./images/platform_left.h"
 #include "./images/platform_right.h"
 
+#include "./images/goku_run2.h"
+
 
 
 #define PLAYER_SPEED 2
@@ -151,7 +153,7 @@ int game() {
 			}
 		}
 //collision check
-
+/*
 		for (int i = 0;i<num_plat;i++) {
 			if (checkCollision(player, platforms[i]) == 1) {
 				player.row = platforms[i].row + platforms[i].height;
@@ -161,7 +163,7 @@ int game() {
 
 			}
 		}
-
+*/
 
 		isValidJump = KEY_DOWN_NOW(BUTTON_UP);
 		isValidDash = KEY_DOWN_NOW(BUTTON_A);
