@@ -70,7 +70,7 @@ void start() {
 
 int game() {
 	REG_DISPCNT = MODE3 | BG2_ENABLE;
-	setColor(BLACK);
+	setColor(WHITE);
 
 	PLAYER player = {160 - GOKU_STAND_HEIGHT + 5, 0, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, 2, 1, RIGHT, STAND};
 	PLAYER oldPlayer = player;
@@ -79,12 +79,15 @@ int game() {
 	drawPlayer(player);
 
 	waitForVblank();
+//draw platforms
 	int num_plat = (rand()%2)+2;
 	PLATFORM platforms [num_plat];
 	for(int i=0;i<num_plat;i++){
-		platforms[i].facing = rand()%3;
-		platforms[i].row = (rand()%120) - PLATFORM_LEFT_HEIGHT + 40;
+	//	platforms[i].facing = rand()%3;
+		platforms[i].facing = 0;
+		platforms[i].row = (rand()%120) - PLATFORM_LEFT_HEIGHT;
 		platforms[i].col = rand()%(120 - PLATFORM_UP_WIDTH);
+
 		if (platforms[i].facing == 2) {
 			platforms[i].row-=60;
 		} else if (platforms[i].facing == 1) {
@@ -114,9 +117,10 @@ int game() {
        		if (KEY_DOWN_NOW(BUTTON_START)) {
 			return END;
 		} 
-        	if (KEY_DOWN_NOW(BUTTON_UP) && (isValidJump == 0) && (player.doubleJump >0)) {
+        	if (KEY_DOWN_NOW(BUTTON_UP) //&& (isValidJump == 0) && (player.doubleJump>0)
+			) {
 			player.stance = JUMP;
-			player.row -= GOKU_STAND_HEIGHT;
+			player.row -= 2;
 			player.doubleJump -=1;
 		} 
         
@@ -146,13 +150,18 @@ int game() {
                 		player.row += (oldPlayer.height - GOKU_DASH_HEIGHT) + oldPlayer.row;
 			}
 		}
+//collision check
+
 		for (int i = 0;i<num_plat;i++) {
-			if (checkCollision(player, platforms[i])) {
-				player.row = platforms[i].row;
-				player.col = platforms[i].col;
+			if (checkCollision(player, platforms[i]) == 1) {
+				player.row = platforms[i].row + platforms[i].height;
 				player.doubleJump = 2;
+				sprintf(score_buffer, "%i", player.row);
+				drawString(20, 90, score_buffer, GREEN);
+
 			}
 		}
+
 
 		isValidJump = KEY_DOWN_NOW(BUTTON_UP);
 		isValidDash = KEY_DOWN_NOW(BUTTON_A);

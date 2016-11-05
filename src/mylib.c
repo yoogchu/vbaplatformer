@@ -145,8 +145,9 @@ void waitForVblank() {
 }
 int checkCollision(PLAYER player, PLATFORM platform) {
 //case bonking from bottom
-	if ( (player.row > platform.row + platform.height) && (player.col + player.width > platform.col) &&
-		(player.col + player.width < platform.col + platform.width) ){
+	if ( (player.row <= (platform.row + platform.height)) && //head
+		((player.col + player.width) >= platform.col) &&  //right side
+		(player.col <= platform.col + platform.width) ){  //left side
 		return 1;
 	}
 	return 0;
