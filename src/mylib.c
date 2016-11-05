@@ -1,4 +1,13 @@
 #include "mylib.h"
+#include "./images/goku_stand.h"
+#include "./images/goku_standL.h"
+#include "./images/goku_run1.h"
+#include "./images/goku_run1L.h"
+#include "./images/goku_jump1.h"
+#include "./images/goku_jump1L.h"
+#include "./images/goku_dash4.h"
+#include "./images/goku_dash4L.h"
+ 
 u16* videoBuffer = (u16*) 0x6000000;
 
 // set pixel (r,c) to a color
@@ -21,27 +30,43 @@ void drawImage3(int r, int c, int width, int height, const u16* image) {
 		DMA[3].cnt = width | DMA_ON;
 	}
 }
-/*
-void drawPlayer(PLAYER player)
-{
-	if (player.facing == RIGHT)
-	{
-		drawImage3(player.row, player.col, 32, 32, doodler32);
-	} elseif
 
+void drawPlayer(PLAYER player) {
+	//CHECK FACE HERE
+    if (player.facing == RIGHT){
+	    //CHECK STANCE HERE
+        if (player.stance == DASH) {
+            drawImage3(player.row, player.col, GOKU_DASH4_WIDTH, GOKU_DASH4_HEIGHT, goku_dash4);
+	    }
+        else if (player.stance == JUMP) {
+            drawImage3(player.row, player.col, GOKU_JUMP1_WIDTH, GOKU_JUMP1_HEIGHT, goku_jump1);
+	    }
+        else if (player.stance == RUN) {
+            drawImage3(player.row, player.col, GOKU_RUN1_WIDTH, GOKU_RUN1_HEIGHT, goku_run1);
+	    } 
+        else if (player.stance == STAND) {
+            drawImage3(player.row, player.col, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, goku_stand);
+	    }
+    } else {
+	 if (player.stance == DASH) {
+            drawImage3(player.row, player.col, GOKU_DASH4L_WIDTH, GOKU_DASH4L_HEIGHT, goku_dash4L);
+	    }
+        else if (player.stance == JUMP) {
+            drawImage3(player.row, player.col, GOKU_JUMP1_WIDTH, GOKU_JUMP1_HEIGHT, goku_jump1L);
+	    }
+        else if (player.stance == RUN) {
+            drawImage3(player.row, player.col, GOKU_RUN1_WIDTH, GOKU_RUN1_HEIGHT, goku_run1L);
+	    } 
+        else if (player.stance == STAND) {
+            drawImage3(player.row, player.col, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, goku_standL);
+	    }
+	} 
+} 
+
+void drawPlatform (PLATFORM platform) {
+	for(int i = 0; i < platform.num; i++) {
+		drawImage3(platform.row, platform.col, , GOKU_STAND_HEIGHT, goku_standL);
 }
-
-void drawEnemy(ENEMY sEnemy)
-{
-	drawImage3(sEnemy.row, sEnemy.col, 28, 28, enemy);
-}
-
-void drawJetpack(JETPACK sJetpack)
-{
-	drawImage3(sJetpack.row, sJetpack.col, 16, 24, jetpack);
-}
-
-*/
 void setColor(volatile u16 color)
 {
 	DMA[3].src = &color;

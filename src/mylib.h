@@ -1,4 +1,11 @@
-
+#include "./images/goku_stand.h"
+#include "./images/goku_standL.h"
+#include "./images/goku_run1.h"
+#include "./images/goku_run1L.h"
+#include "./images/goku_jump1.h"
+#include "./images/goku_jump1L.h"
+#include "./images/goku_dash4.h"
+#include "./images/goku_dash4L.h"
 typedef unsigned short u16;
 typedef unsigned int u32;
 
@@ -27,6 +34,7 @@ extern u16* videoBuffer;
 
 
 // buttons
+#define BUTTONS       *(volatile unsigned short*) 0x4000130
 #define BUTTON_A	(1<<0)
 #define BUTTON_B	(1<<1)
 #define BUTTON_SELECT	(1<<2)
@@ -38,7 +46,8 @@ extern u16* videoBuffer;
 #define BUTTON_R	(1<<8)
 #define BUTTON_L	(1<<9)
 #define KEY_DOWN_NOW(key)  (~(BUTTONS) & key)
-#define BUTTONS *(volatile unsigned int *)0x4000130
+#define KEY_UP_NOW(key) (~(BUTTONS) & ~key)
+
 
 // dma
 typedef struct
@@ -110,25 +119,24 @@ typedef struct
 #define INFO_GUTTER_WIDTH 40
 #define DOODLER_SIZE DOODLER32_HEIGHT
 #define ENEMY_SIZE ENEMY_WIDTH
-enum FACING {LEFT, RIGHT};
-enum STANCE {UP, RUN, STAND, DASH};
 
-typedef struct
-{
+typedef struct {
 	int row;
 	int col;
-	enum FACING facing;
 	int doubleJump;
 	int dash;
-    enum STANCE stance;
+	int facing;
+   	int stance;
 } PLAYER;
+	enum FACING {LEFT, RIGHT};
+	enum STANCE {JUMP, RUN, STAND, DASH};
 
-
-typedef struct
-{
+typedef struct {
 	int row;
 	int col;
-	int length;
+	int width;
+	int height;
+	int num;
 } PLATFORM;
 
 
