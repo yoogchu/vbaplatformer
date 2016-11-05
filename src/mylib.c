@@ -149,16 +149,22 @@ void waitForVblank() {
 	while(SCANLINECOUNTER > 160);
 	while(SCANLINECOUNTER < 160);
 }
-int checkCollision(PLAYER player, PLATFORM platform) {
-	if ( (player.row <= (platform.row + platform.height)) &&	//case bonking from bottom
-		((player.col + player.width) >= platform.col) &&
-		(player.col <= (platform.col + platform.width)) ) {
-        	return 1;
-   	} 
-	else if ( ((player.row + player.height) >= platform.row) &&	//case dropping in from top
-		((player.col + player.width) >= platform.col) &&
-		(player.col <= (platform.col + platform.width)) ) {
-		return 2;
+int checkCollision(PLAYER player, PLATFORM platform, int scenario) {
+	switch(scenario) {
+		case 1:
+			if ( (player.row <= (platform.row + platform.height)) &&	//case bonking from bottom
+			((player.col + player.width) >= platform.col) &&
+			(player.col <= (platform.col + platform.width)) ) {
+			return 1;
+   			}
+		case 2:
+			 if ( ((player.row + player.height) >= platform.row) &&	//case dropping in from top
+			((player.col + player.width) >= platform.col) &&
+			(player.col <= (platform.col + platform.width)) ) {
+			return 2;
+			}
+		default:
+			return 0;
 	} 
     return 0;
 }

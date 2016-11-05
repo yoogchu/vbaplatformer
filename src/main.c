@@ -155,10 +155,14 @@ int game() {
 		}
 //collision check
 		for (int i = 0;i < num_plat;i++) {
-			if (checkCollision(player, platforms[i]) == 2) {
-				player.row = platforms[i].row - player.height;
-			} else if ( (checkCollision(player, platforms[i]) == 1) && (player.stance == JUMP)) {
-				player.row = platforms[i].row + platforms[i].height;
+			if (player.row < platforms[i].row) {		//goku above platform
+				if (checkCollision(player, platforms[i], 2)) {
+					player.row = platforms[i].row - player.height;
+				}
+			} else if (player.row > platforms[i].row) {	//goku below platform
+				if ((checkCollision(player, platforms[i], 1)) && (player.stance == JUMP)) {
+					player.row = platforms[i].row + platforms[i].height;
+				}
 			}
 		}
 
