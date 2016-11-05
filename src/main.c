@@ -43,7 +43,7 @@ int main() {
 void start() {
 	REG_DISPCNT = MODE3 | BG2_ENABLE;
 	setColour(BLACK);
-	drawString(20, 90, "GET HIGH", WHITE);
+	drawString(20, 90, "GET HIGH", GREEN);
 	
     	drawImage3(160 - GOKU_MAIN_HEIGHT,0, GOKU_MAIN_WIDTH, GOKU_MAIN_HEIGHT, goku_main);    
 	drawString(50, 45, "Goku wants to get high!", WHITE);
@@ -240,8 +240,9 @@ void end(){
 	REG_DISPCNT = MODE3 | BG2_ENABLE;
 	setColour(BLACK);
 	drawString(20, 85, "Game Over", RED);
-	drawString(30, 85, "Your Score: ", WHITE);
+	drawString(30, 70, "Your Score: ", WHITE);
 	drawString(30, 160, score_buffer, WHITE);
+	drawImage3(70, 100, GOKU_DEAD_WIDTH, GOKU_DEAD_HEIGHT, goku_dead);
 	drawString(132, 45, "Press Start to Play Again", WHITE);
 
 	while(!KEY_DOWN_NOW(BUTTON_START));
