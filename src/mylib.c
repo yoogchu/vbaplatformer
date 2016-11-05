@@ -31,10 +31,8 @@ void drawImage3(int r, int c, int width, int height, const u16* image) {
 	}
 }
 
-void drawPlayer(PLAYER player){
-	
-//CHECK FACE HERE
-
+void drawPlayer(PLAYER player) {
+	//CHECK FACE HERE
     if (player.facing == RIGHT){
 	    //CHECK STANCE HERE
         if (player.stance == DASH) {
@@ -63,21 +61,12 @@ void drawPlayer(PLAYER player){
             drawImage3(player.row, player.col, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, goku_standL);
 	    }
 	} 
-
 } 
 
-/*
-void drawEnemy(ENEMY sEnemy)
-{
-	drawImage3(sEnemy.row, sEnemy.col, 28, 28, enemy);
+void drawPlatform (PLATFORM platform) {
+	for(int i = 0; i < platform.num; i++) {
+		drawImage3(platform.row, platform.col, , GOKU_STAND_HEIGHT, goku_standL);
 }
-
-void drawJetpack(JETPACK sJetpack)
-{
-	drawImage3(sJetpack.row, sJetpack.col, 16, 24, jetpack);
-}
-
-*/
 void setColor(volatile u16 color)
 {
 	DMA[3].src = &color;

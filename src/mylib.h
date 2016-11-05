@@ -134,7 +134,9 @@ typedef struct {
 typedef struct {
 	int row;
 	int col;
-	int length;
+	int width;
+	int height;
+	int num;
 } PLATFORM;
 
 

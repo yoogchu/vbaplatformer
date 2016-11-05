@@ -17,6 +17,7 @@
 
 #define PLAYER_SPEED 2
 #define GOKU_STAND_HEIGHT 48
+#define DASH_LENGTH 50
 
 enum {START, GAME, END};
 
@@ -70,11 +71,12 @@ int game() {
 	PLAYER player = {160 - GOKU_STAND_HEIGHT, 0, 2, 1, RIGHT, STAND};
 	PLAYER oldPlayer = player;
 
-    waitForVblank();
+    	waitForVblank();
 	drawPlayer(player);
 
 	waitForVblank();
     	int isValidJump = 0;
+	int isValidDash = 0;
     
 	while(1) {
 		player.row += 2;
@@ -104,24 +106,25 @@ int game() {
 			player.facing = RIGHT;
 			player.col += PLAYER_SPEED;
 			if (player.col > 240 - GOKU_RUN1_HEIGHT) player.col = 240 - GOKU_RUN1_HEIGHT;
-		} if(KEY_DOWN_NOW(BUTTON_A)) {
+		} if(KEY_DOWN_NOW(BUTTON_A) && (isValidDash == 0)) {
 			player.stance = DASH;
-			if (player.facing == LEFT) player.col -= 20;
-			if (player.facing == RIGHT) player.col += 20;
-			drawRect(oldPlayer.row, oldPlayer.col, GOKU_STAND_HEIGHT, GOKU_DASH4_WIDTH, BLACK);
+			if (player.facing == LEFT) {
+				player.col -= DASH_LENGTH;
+			} else if (player.facing == RIGHT) {
+				player.col += DASH_LENGTH;
+			}
 			if (player.col < 0) player.col = 0;
 			if (player.col > 240 - GOKU_RUN1_HEIGHT) player.col = 240 - GOKU_RUN1_HEIGHT;
 		}
 		
 		isValidJump = KEY_DOWN_NOW(BUTTON_UP);
+		isValidDash = KEY_DOWN_NOW(BUTTON_A);
 		waitForVblank();
-		drawRect(oldPlayer.row, oldPlayer.col, GOKU_STAND_HEIGHT, GOKU_STAND_WIDTH, BLACK);
-	//setColor(BLACK);
-        drawPlayer(player);
-        oldPlayer = player;
-	
+		drawRect(oldPlayer.row, oldPlayer.col, GOKU_STAND_HEIGHT, GOKU_DASH4_WIDTH+40, BLACK);
+		//setColor(BLACK);
+        	drawPlayer(player);
+        	oldPlayer = player;
 	}
-	
 	return 1;
 }
 void end(){
