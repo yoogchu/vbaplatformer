@@ -143,6 +143,15 @@ void waitForVblank() {
 	while(SCANLINECOUNTER > 160);
 	while(SCANLINECOUNTER < 160);
 }
+int checkCollision(PLAYER player, PLATFORM platform) {
+	if ( (player.row < (platform.col + platform.width)) && ((player.row + player.height) > platform.row) ) {
+		if ( (player.col < (platform.col + platform.width)) && ((player.col + player.width) > platform.col) ) {
+			return 1;
+		}
+	}
+	return 0;
+}
+
 /*//int collisionBufferZone
 int collision(int aRow, int aCol, int aWidth, int aHeight, int bRow, int bCol, int bWidth, int bHeight)
 {

@@ -141,8 +141,6 @@ typedef struct {
 	int num;
 	int facing;
 } PLATFORM;
-	enum FACING_PLAT {LEFTP, RIGHTP, UP};
-
 
 // **Prototypes**
 void drawImage(const unsigned short arr[]);
@@ -154,15 +152,10 @@ void drawPlatform(PLATFORM platform);
 void setColor(u16 color);
 void clearScreen();
 
-
 void setPixel(int r, int c, u16 color);
 void drawRect(int r, int c, int width, int height, u16 color);
 
-void drawHollowRect(int r, int c, int width, int height, u16 color);
-
-
 void waitForVblank();
-
-//int collision(int aRow, int aCol, int aWidth, int aHeight, int bRow, int bCol, int bWidth, int bHeight);
+int checkCollision(PLAYER player, PLATFORM platform);
 int death(PLAYER player);
 

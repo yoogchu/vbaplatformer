@@ -99,7 +99,6 @@ int game() {
 	}  	
 	int isValidJump = 0;
 	int isValidDash = 0;
-    
 	while(1) {
 		player.row += 1; 	//GRAVITY
 		if (player.row > 160 - GOKU_STAND_HEIGHT) player.row = 160 - GOKU_STAND_HEIGHT;
@@ -143,13 +142,18 @@ int game() {
 			if (player.col < 0) player.col = 0;
 			if (player.col > 240 - GOKU_RUN1_HEIGHT) player.col = 240 - GOKU_RUN1_HEIGHT;
 		}
-		
+		for (int i = 0;i<num_plat;i++) {
+			if (checkCollision(player, platforms[i])) {
+				player.row = platforms[i].row;
+				player.col = platforms[i].col;
+				player.doubleJump = 2;
+			}
+		}
 		isValidJump = KEY_DOWN_NOW(BUTTON_UP);
 		isValidDash = KEY_DOWN_NOW(BUTTON_A);
 		waitForVblank();
 		drawRect(oldPlayer.row, oldPlayer.col, oldPlayer.width, oldPlayer.height, BLACK);
 
-		//setColor(BLACK);
         	drawPlayer(player);
         	oldPlayer = player;
 	}
