@@ -73,9 +73,10 @@ int game() {
 	drawPlayer(player, 0);
 
 //draw platforms
-	int num_plat = (rand()%2)+2;
+//	int num_plat = (rand()%2)+2;
+	int num_plat = 1;
 	PLATFORM platforms [num_plat];
-	for(int i=0;i< 1;i++){
+	for(int i=0;i<num_plat;i++){
 	//	platforms[i].facing = rand()%3;
 		platforms[i].facing = 0;
 		platforms[i].row = (rand()%120) - PLATFORM_LEFT_HEIGHT;
@@ -83,10 +84,16 @@ int game() {
 
 		if (platforms[i].facing == 2) {
 			platforms[i].row-=60;
+			platforms[i].height = PLATFORM_RIGHT_HEIGHT;
+			platforms[i].width = PLATFORM_RIGHT_WIDTH;
 		} else if (platforms[i].facing == 1) {
 			platforms[i].col+=120;
+			platforms[i].height = PLATFORM_LEFT_HEIGHT;
+			platforms[i].width = PLATFORM_LEFT_WIDTH;
 		} else if (platforms[i].facing == 0) {
 			platforms[i].col+=60;
+			platforms[i].height = PLATFORM_UP_HEIGHT;
+			platforms[i].width = PLATFORM_UP_WIDTH;
 		}
 		if (platforms[i].row < 0) platforms[i].row = 0;
 		if (platforms[i].row > 120) platforms[i].row = 120 - GOKU_STAND_HEIGHT - 20;
@@ -147,18 +154,14 @@ int game() {
 			}
 		}
 //collision check
-/*
-
-		for (int i = 0;i < 1;i++) {
-			if (checkCollision(player, platforms[i]) == 1) {
+		for (int i = 0;i < num_plat;i++) {
+			if (checkCollision(player, platforms[i]) == 2) {
+				player.row = platforms[i].row - player.height;
+			} else if ( (checkCollision(player, platforms[i]) == 1) && (player.stance == JUMP)) {
 				player.row = platforms[i].row + platforms[i].height;
-				player.doubleJump = 2;
-				sprintf(score_buffer, "%i", player.row);
-				drawString(20, 90, score_buffer, GREEN);
-
 			}
 		}
-*/
+
 		isValidJump = KEY_DOWN_NOW(BUTTON_UP);
 		isValidDash = KEY_DOWN_NOW(BUTTON_A);
 		drawRect(oldPlayer.row, oldPlayer.col, oldPlayer.width, oldPlayer.height, BLACK);

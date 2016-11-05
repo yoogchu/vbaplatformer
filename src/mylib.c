@@ -88,11 +88,11 @@ void drawPlayer(PLAYER player, int frame) {
             player.width = GOKU_JUMP_WIDTH; 
         } else if (player.stance == RUN) {
 		if (frame == 0) {
-            		drawImage3(player.row, player.col, GOKU_RUN1_WIDTH, GOKU_RUN1_HEIGHT, goku_run1L);
+            		drawImage3(player.row, player.col, GOKU_RUN1L_WIDTH, GOKU_RUN1L_HEIGHT, goku_run1L);
 		} else if(frame == 1){
-			drawImage3(player.row, player.col, GOKU_RUN2_WIDTH, GOKU_RUN2_HEIGHT, goku_run2L);
+			drawImage3(player.row, player.col, GOKU_RUN2L_WIDTH, GOKU_RUN2L_HEIGHT, goku_run2L);
 		} else if(frame == 2){
-			drawImage3(player.row, player.col, GOKU_RUN3_WIDTH, GOKU_RUN3_HEIGHT, goku_run3L);
+			drawImage3(player.row, player.col, GOKU_RUN3L_WIDTH, GOKU_RUN3L_HEIGHT, goku_run3L);
 		}
 	        player.height = GOKU_RUN1_HEIGHT;
             	player.width = GOKU_RUN1_WIDTH; 
@@ -111,12 +111,18 @@ void drawPlayer(PLAYER player, int frame) {
 void drawPlatform (PLATFORM platform) {
 	if (platform.facing == 0) {
 		drawImage3(platform.row, platform.col, PLATFORM_UP_WIDTH, PLATFORM_UP_HEIGHT, platform_up);
+		platform.height = PLATFORM_UP_HEIGHT;
+		platform.width = PLATFORM_UP_WIDTH;
 	}
 	else if (platform.facing == 1) {
 		drawImage3(platform.row, platform.col, PLATFORM_LEFT_WIDTH, PLATFORM_LEFT_HEIGHT, platform_left);
+		platform.height = PLATFORM_LEFT_HEIGHT;
+		platform.width = PLATFORM_LEFT_WIDTH;
 	}
 	else if (platform.facing == 2) {
 		drawImage3(platform.row, platform.col, PLATFORM_RIGHT_WIDTH, PLATFORM_RIGHT_HEIGHT, platform_right);
+		platform.height = PLATFORM_RIGHT_HEIGHT;
+		platform.width = PLATFORM_RIGHT_WIDTH;
 	}
 }
 void setColor(volatile u16 color) {
@@ -139,42 +145,21 @@ void drawRect(int r, int c, int width, int height, u16 color) {
 	}
 }
 
-// A function to draw a HOLLOW rectangle starting at (r, c).
-void drawHollowRect(int r, int c, int width, int height, u16 color) {
-	int row, col;
-	row = 0;
-	for (col = 0; col < width; col++) {
-		setPixel(r+row, c+col, color);
-	}
-
-	col = 0;
-	for (row = 1; row < height - 1; row++) {
-		setPixel(r+row, c+col, color);
-	}
-
-	col = width - 1;
-	for (row = 1; row < height - 1; row++) {
-		setPixel(r+row, c+col, color);
-	}
-
-
-    row = height - 1;
-	for (col = 0; col < width; col++) {
-		setPixel(r+row, c+col, color);
-	}
-}
-
 void waitForVblank() {
 	while(SCANLINECOUNTER > 160);
 	while(SCANLINECOUNTER < 160);
 }
 int checkCollision(PLAYER player, PLATFORM platform) {
-//case bonking from bottom
-	if ( (player.row <= (platform.row + platform.height))) {
-        if (((player.col + player.width) >= platform.col) & ((player.col <= ((platform.col + platform.width))))) {
-        return 1;
-   } 
-	}
+	if ( (player.row <= (platform.row + platform.height)) &&	//case bonking from bottom
+		((player.col + player.width) >= platform.col) &&
+		(player.col <= (platform.col + platform.width)) ) {
+        	return 1;
+   	} 
+	else if ( ((player.row + player.height) >= platform.row) &&	//case dropping in from top
+		((player.col + player.width) >= platform.col) &&
+		(player.col <= (platform.col + platform.width)) ) {
+		return 2;
+	} 
     return 0;
 }
 
