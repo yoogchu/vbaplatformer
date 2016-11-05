@@ -1,43 +1,38 @@
 #include <stdlib.h>
 #include "mylib.h"
 #include "text.h"
+#include "goku_main.h"
 
 #define NUMENEMIES 4
 #define DOODLER_SPEED_DEFAULT 2
 #define LIVES_DEFAULT 3
 
-enum {SPLASH, GAME, WIN, LOSE};
+enum {START, GAME, END};
 
-void splash();
+void start();
 int game();
-void win();
-void lose();
+void end();
 
 int main()
 {
-	int state = SPLASH;
+	int state = START;
 	int lives = LIVES_DEFAULT;
 	while(1)
 	{
 		switch(state)
 		{
-			case SPLASH:
-				splash(&lives);
-				state = WIN;
+			case START:
+				start(&lives);
+				state = END;
 				break;
 
 			case GAME:
 				state = game(&lives);
 				break;
 
-			case WIN:
-				win();
-				state = SPLASH;
-				break;
-
-			case LOSE:
-				lose();
-				state = SPLASH;
+			case END:
+				end();
+				state = START;
 				break;
 
 			default:
@@ -47,17 +42,14 @@ int main()
 
 }
 
-void splash(int* plives)
-{
+void start(int* plives){
 	REG_DISPCNT = MODE3 | BG2_ENABLE;
-	setColour(BLUE);
-	drawString(20, 60, "JUMP HIGHER", WHITE);
+	setColour(BLACK);
+	drawString(20, 90, "GET HIGH", WHITE);
 	
-	//DOODLER doodler = {64, 104, RIGHT};
-	//drawDoodler(doodler);
-	drawString(109, 37, "Goku wants to get high!", WHITE);
-	drawString(120, 50, "Get High!", WHITE);
-	drawString(140, 60, "Press Start to Play", WHITE);
+    drawImage3(160 - GOKU_MAIN_HEIGHT,0, GOKU_MAIN_WIDTH, GOKU_MAIN_HEIGHT, goku_main);    
+	drawString(50, 45, "Goku wants to get high!", WHITE);
+	drawString(75, 60, "Press Start to Play", WHITE);
 
 	*plives = LIVES_DEFAULT;
 
@@ -65,8 +57,7 @@ void splash(int* plives)
 	while(KEY_DOWN_NOW(BUTTON_START));
 }
 
-int game(int* plives)
-{
+int game(int* plives){
 	REG_DISPCNT = MODE3 | BG2_ENABLE;
 	setColour(BLACK);
 	drawRect(0, 0, 240 - INFO_GUTTER_WIDTH, 160, WHITE);
@@ -149,7 +140,8 @@ int game(int* plives)
 		}
 		if(KEY_DOWN_NOW(BUTTON_DOWN))
 		{
-			doodler.row += doodlerSpeed;
+			doodle:wq
+r.row += doodlerSpeed;
 			if (doodler.row > 160 - DOODLER_SIZE)
 			{
 				doodler.row = 160 - DOODLER_SIZE;
@@ -250,8 +242,7 @@ int game(int* plives)
     return 1;
 }
 
-void win()
-{
+void end(){
 	REG_DISPCNT = MODE3 | BG2_ENABLE;
 	setColour(GREEN);
 	drawString(20, 85, "YOU WIN! :)", WHITE);
@@ -261,12 +252,3 @@ void win()
 	while(KEY_DOWN_NOW(BUTTON_START));
 }
 
-void lose()
-{
-	REG_DISPCNT = MODE3 | BG2_ENABLE;
-	setColour(RED);
-	drawString(20, 85, "YOU LOSE! :(", WHITE);
-	drawString(132, 45, "Press Start to Play Again", WHITE);
-	while(!KEY_DOWN_NOW(BUTTON_START));
-	while(KEY_DOWN_NOW(BUTTON_START));
-}
