@@ -4,6 +4,7 @@
 #include "text.h"
 #include "./images/goku_main.h"
 #include "./images/goku_dead.h"
+#include "./images/goku_stand.h"
 
 #define PLAYER_SPEED 2
 #define NUMBER_JUMPS 2
@@ -53,13 +54,20 @@ void start() {
 	while(KEY_DOWN_NOW(BUTTON_START));
 }
 
-int game(){
+int game() {
 	REG_DISPCNT = MODE3 | BG2_ENABLE;
 	setColor(CYAN);
-	drawRect(0, 0, 240 - INFO_GUTTER_WIDTH, 160, WHITE);
-	drawString(0, 240 - INFO_GUTTER_WIDTH, "LIVES:", WHITE);
-//	drawChar(10, 240 - INFO_GUTTER_WIDTH, *plives + NUMERAL_OFFSET, WHITE);
+	if (KEY_DOWN_NOW(BUTTON_START)){
+		return END;
+	}
 
+//	PLAYER player = {160 - GOKU_STAND_HEIGHT, 0, RIGHT, NUMBER_JUMPS, 1);
+	drawImage3(160 - GOKU_STAND_HEIGHT, 0, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, goku_stand);
+
+	waitForVblank();
+
+	return 1;
+}	 
 /*
 	DOODLER doodler = {160 - DOODLER_SIZE, 240 - INFO_GUTTER_WIDTH - DOODLER_SIZE, LEFT};
 	DOODLER oldDoodler = doodler;
@@ -233,8 +241,8 @@ r.row += doodlerSpeed;
 		drawJetpack(sJetpack);
 */
 //	}
-    return 1;
-}
+//    return 1;
+//}
 
 void end(){
 	REG_DISPCNT = MODE3 | BG2_ENABLE;

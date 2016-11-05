@@ -22,17 +22,13 @@ void drawImage3(int r, int c, int width, int height, const u16* image) {
 	}
 }
 /*
-void drawDoodler(DOODLER doodler)
+void drawPlayer(PLAYER player)
 {
-	if (doodler.facing == RIGHT)
+	if (player.facing == RIGHT)
 	{
-		drawImage3(doodler.row, doodler.col, 32, 32, doodler32);
-	}
-	else
-	{
-		drawImage3(doodler.row, doodler.col, 32, 32, doodler32L);
-	}
-	
+		drawImage3(player.row, player.col, 32, 32, doodler32);
+	} elseif
+
 }
 
 void drawEnemy(ENEMY sEnemy)
