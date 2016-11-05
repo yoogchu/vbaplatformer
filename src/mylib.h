@@ -1,4 +1,11 @@
-
+#include "./images/goku_stand.h"
+#include "./images/goku_standL.h"
+#include "./images/goku_run1.h"
+#include "./images/goku_run1L.h"
+#include "./images/goku_jump1.h"
+#include "./images/goku_jump1L.h"
+#include "./images/goku_dash4.h"
+#include "./images/goku_dash4L.h"
 typedef unsigned short u16;
 typedef unsigned int u32;
 
@@ -110,22 +117,19 @@ typedef struct
 #define INFO_GUTTER_WIDTH 40
 #define DOODLER_SIZE DOODLER32_HEIGHT
 #define ENEMY_SIZE ENEMY_WIDTH
-enum FACING {LEFT, RIGHT};
-enum STANCE {JUMP, RUN, STAND, DASH};
 
-typedef struct
-{
+typedef struct {
 	int row;
 	int col;
-	enum FACING facing;
 	int doubleJump;
 	int dash;
-    enum STANCE stance;
+	int facing;
+   	int stance;
 } PLAYER;
+	enum FACING {LEFT, RIGHT};
+	enum STANCE {JUMP, RUN, STAND, DASH};
 
-
-typedef struct
-{
+typedef struct {
 	int row;
 	int col;
 	int length;

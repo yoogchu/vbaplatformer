@@ -11,12 +11,15 @@ PROGNAME = GOKU_JUMP
 
 # The object files you want to compile into your program
 # This should be a space (SPACE!) separated list of .o files
-OFILES = main.o mylib.o text.o font.o ./images/*.o
+OFILES = main.o mylib.o text.o font.o ./images/goku_standL.o ./images/goku_dead.o ./images/goku_main.o \
+./images/goku_stand.o ./images/goku_run1.o ./images/goku_run1L.o ./images/goku_jump1.o ./images/goku_jump1L.o \
+./images/goku_dash4.o ./images/goku_dash4L.o
 
 # The header files you have created.
 # This is necessary to determine when to recompile for files.
 # This should be a space (SPACE!) separated list of .h files
-HFILES = mylib.h text.h goku_main.h ./*.h
+HFILES = mylib.h text.h goku_main.h goku_standL.h goku_dead.h goku_stand.h goku_jump1.h goku_jump1L.h goku_run1.h \
+goku_run1L.h goku_dash4.h goku_dash4L.h
 
 ################################################################################
 # These are various settings used to make the GBA toolchain work

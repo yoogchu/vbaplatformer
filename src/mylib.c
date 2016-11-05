@@ -1,8 +1,12 @@
 #include "mylib.h"
-#include "./images/goku_dash1.h"
-#include "./images/goku_jump1.h"
-#include "./images/goku_run1.h"
 #include "./images/goku_stand.h"
+#include "./images/goku_standL.h"
+#include "./images/goku_run1.h"
+#include "./images/goku_run1L.h"
+#include "./images/goku_jump1.h"
+#include "./images/goku_jump1L.h"
+#include "./images/goku_dash4.h"
+#include "./images/goku_dash4L.h"
  
 u16* videoBuffer = (u16*) 0x6000000;
 
@@ -28,12 +32,13 @@ void drawImage3(int r, int c, int width, int height, const u16* image) {
 }
 
 void drawPlayer(PLAYER player){
-	//CHECK FACE HERE
+	
+//CHECK FACE HERE
 
     if (player.facing == RIGHT){
 	    //CHECK STANCE HERE
         if (player.stance == DASH) {
-            drawImage3(player.row, player.col, GOKU_DASH1_WIDTH, GOKU_DASH1_HEIGHT, goku_dash1);
+            drawImage3(player.row, player.col, GOKU_DASH4_WIDTH, GOKU_DASH4_HEIGHT, goku_dash4);
 	    }
         else if (player.stance == JUMP) {
             drawImage3(player.row, player.col, GOKU_JUMP1_WIDTH, GOKU_JUMP1_HEIGHT, goku_jump1);
@@ -44,10 +49,22 @@ void drawPlayer(PLAYER player){
         else if (player.stance == STAND) {
             drawImage3(player.row, player.col, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, goku_stand);
 	    }
-  
-    } 
+    } else {
+	 if (player.stance == DASH) {
+            drawImage3(player.row, player.col, GOKU_DASH4_WIDTH, GOKU_DASH4_HEIGHT, goku_dash4L);
+	    }
+        else if (player.stance == JUMP) {
+            drawImage3(player.row, player.col, GOKU_JUMP1_WIDTH, GOKU_JUMP1_HEIGHT, goku_jump1L);
+	    }
+        else if (player.stance == RUN) {
+            drawImage3(player.row, player.col, GOKU_RUN1_WIDTH, GOKU_RUN1_HEIGHT, goku_run1L);
+	    } 
+        else if (player.stance == STAND) {
+            drawImage3(player.row, player.col, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, goku_standL);
+	    }
+	} 
 
-}
+} 
 
 /*
 void drawEnemy(ENEMY sEnemy)

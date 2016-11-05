@@ -13,8 +13,11 @@
 #include "./images/goku_dash4.h"
 #include "./images/goku_dash4L.h"
 
+
+
 #define PLAYER_SPEED 2
 #define NUMBER_JUMPS 2
+#define GOKU_STAND_HEIGHT 48
 
 enum {START, GAME, END};
 
@@ -65,18 +68,21 @@ int game() {
 	REG_DISPCNT = MODE3 | BG2_ENABLE;
 	setColor(CYAN);
 
-//	PLAYER player = {160 - GOKU_STAND_HEIGHT, 0, RIGHT, NUMBER_JUMPS, 1};	
-//	drawImage3(160 - GOKU_STAND_HEIGHT, 0, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, goku_stand);
+	PLAYER player = {160 - GOKU_STAND_HEIGHT, 0, NUMBER_JUMPS, 1, RIGHT, STAND};
 	waitForVblank();
-/*
+
 	drawPlayer(player);
 	waitForVblank();
 
-	while(1) {	
+	while(1) {
+		player.row += 1;
+		if (player.col < 0) player.col = 0;
+		if (player.col > 240 - GOKU_RUN1_HEIGHT) player.col = 240 - GOKU_RUN1_HEIGHT;
+
 		if (KEY_DOWN_NOW(BUTTON_START)) {
 			return END;
 		} if (KEY_DOWN_NOW(BUTTON_UP)) {
-			player.stance = UP;
+			player.stance = JUMP;
 			player.row -= (PLAYER_SPEED*2);
 			if (player.row < 0) player.row = 0;
 		} if (KEY_DOWN_NOW(BUTTON_DOWN)) {
@@ -89,7 +95,7 @@ int game() {
 			if (player.col < 0) player.col = 0;
 		} if(KEY_DOWN_NOW(BUTTON_RIGHT)) {
 			player.stance = RUN;
-			player.facing = LEFT;
+			player.facing = RIGHT;
 			player.col += PLAYER_SPEED;
 			if (player.col > 240 - GOKU_RUN1_HEIGHT) player.col = 240 - GOKU_RUN1_HEIGHT;
 		} if(KEY_DOWN_NOW(BUTTON_A)) {
@@ -102,7 +108,7 @@ int game() {
 		waitForVblank();
 		drawPlayer(player);
 	}
-*/
+	
 	return 1;
 }
 	 
