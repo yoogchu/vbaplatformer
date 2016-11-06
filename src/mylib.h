@@ -133,12 +133,20 @@ typedef struct {
 	int facing;
 } PLATFORM;
 
+typedef struct {
+	int row;
+	int col;
+	int width;
+	int height;
+} GOAL;
+
 // **Prototypes**
 void drawImage(const unsigned short arr[]);
 void drawImage3(int r, int c, int width, int height, const u16* image);
 
 PLAYER drawPlayer(PLAYER player, int frame);
 void drawPlatform(PLATFORM platform);
+void drawGoal(GOAL theGoal);
 
 void setColor(u16 color);
 void clearScreen();
@@ -148,4 +156,5 @@ void drawRect(int r, int c, int width, int height, u16 color);
 
 void waitForVblank();
 int checkCollision(PLAYER player, PLATFORM platform, int scenario);
+int checkCollisionGoal(PLAYER player, GOAL goal, int scenario);
 

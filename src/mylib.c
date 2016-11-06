@@ -22,6 +22,7 @@
 #include "./images/platform_up.h"
 #include "./images/platform_left.h"
 #include "./images/platform_right.h"
+#include "./images/goal.h"
  
 u16* videoBuffer = (u16*) 0x6000000;
 int qran_seed = 42;
@@ -31,13 +32,7 @@ void setPixel(int r, int c, u16 color) {
 	videoBuffer[OFFSET(r, c, 240)] = color;
 }
 
-// draw an image using dma
-void drawImage(const unsigned short arr[]) {
-	DMA[3].src = arr;
-	DMA[3].dst = videoBuffer;
-	DMA[3].cnt = (240*160) | DMA_ON;
-}
-
+//draw image using DMA3
 void drawImage3(int r, int c, int width, int height, const u16* image) {
 	for (int i = 0; i < height; i++) {
 		DMA[3].src = &image[OFFSET(i, 0, width)];
@@ -45,7 +40,7 @@ void drawImage3(int r, int c, int width, int height, const u16* image) {
 		DMA[3].cnt = width | DMA_ON;
 	}
 }
-
+//draw player
 PLAYER drawPlayer(PLAYER player, int frame) {
 	//CHECK FACE HERE
  
@@ -119,7 +114,7 @@ PLAYER drawPlayer(PLAYER player, int frame) {
 	}
     return player; 
 } 
-
+//draw platform
 void drawPlatform (PLATFORM platform) {
 	if (platform.facing == 0) {
 		drawImage3(platform.row, platform.col, PLATFORM_UP_WIDTH, PLATFORM_UP_HEIGHT, platform_up);
@@ -137,12 +132,17 @@ void drawPlatform (PLATFORM platform) {
 		platform.width = PLATFORM_RIGHT_WIDTH;
 	}
 }
+//draw goal
+void drawGoal (GOAL theGoal) {
+	drawImage3(theGoal.row, theGoal.col, theGoal.width, theGoal.height, goal);
+}
+//set color of background
 void setColor(volatile u16 color) {
 	DMA[3].src = &color;
 	DMA[3].dst = videoBuffer;
 	DMA[3].cnt = (240*160) | DMA_SOURCE_FIXED | DMA_ON;
 }
-
+// clear screen
 void clearScreen() {
 	setColor(BLACK);
 }
@@ -161,6 +161,7 @@ void waitForVblank() {
 	while(SCANLINECOUNTER > 160);
 	while(SCANLINECOUNTER < 160);
 }
+//check player/platform collision
 int checkCollision(PLAYER player, PLATFORM platform, int scenario) {
 	switch(scenario) {
 		case 1:
@@ -183,12 +184,43 @@ int checkCollision(PLAYER player, PLATFORM platform, int scenario) {
 			}
 		case 4:
 			if ( (player.row < (platform.row + platform.height)) && 	//case touching left side
-			( (player.row + player.height) >= (platform.row + platform.height)) &&
+			( (player.row + player.height + 1) >= (platform.row + platform.height)) &&
 			( (player.col - 1) == (platform.col + platform.width))){
 			return 4;
 			}
 		default:
 			return 0;
 	} 
-    return 0;
+	return 0;
+}
+int checkCollisionGoal(PLAYER player, GOAL goal, int scenario) {
+	switch(scenario) {
+		case 1:
+			if ( (player.row <= (goal.row + goal.height)) &&	//case bonking from bottom
+			((player.col + player.width) >= goal.col) &&
+			(player.col <= (goal.col + goal.width)) ) {
+			return 1;
+   			}
+		case 2:
+			if ( ((player.row + player.height) >= goal.row) &&		//case dropping in from top
+			((player.col + player.width) > goal.col) &&
+			(player.col < (goal.col + goal.width)) ) {
+			return 2;
+			}
+		case 3:
+			if ( (player.row < (goal.row + goal.height)) && 	//case touching right side
+			( (player.row + player.height) >= (goal.row + goal.height)) &&
+			( abs(player.col + player.width - goal.col) < 3)) {
+			return 3;
+			}
+		case 4:
+			if ( (player.row < (goal.row + goal.height)) && 	//case touching left side
+			( (player.row + player.height + 1) >= (goal.row + goal.height)) &&
+			( abs(player.col-goal.col-goal.width) < 3)){
+			return 4;
+			}
+		default:
+			return 0;
+	}
+	return 0;
 }

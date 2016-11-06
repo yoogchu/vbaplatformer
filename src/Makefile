@@ -16,7 +16,7 @@ OFILES = main.o mylib.o text.o font.o ./images/goku_stand.o ./images/goku_standL
 ./images/goku_run3.o ./images/goku_run3L.o images/goku_jump.o ./images/goku_jumpL.o \
 ./images/goku_dash1.o ./images/goku_dash1L.o ./images/goku_dash2.o ./images/goku_dash2L.o \
 ./images/goku_dash3.o ./images/goku_dash3L.o ./images/platform_up.o ./images/platform_left.o ./images/platform_right.o \
-./images/goku_down.o ./images/goku_downL.o
+./images/goku_down.o ./images/goku_downL.o ./images/goal.o
 
 # The header files you have created.
 # This is necessary to determine when to recompile for files.
@@ -24,7 +24,7 @@ OFILES = main.o mylib.o text.o font.o ./images/goku_stand.o ./images/goku_standL
 HFILES = mylib.h text.h goku_main.h goku_dead.h goku_stand.h goku_standL.h \
 goku_run1.h goku_run1L.h goku_run2.h goku_run2L.h goku_run3.h goku_run3L.h \
 goku_jump.h goku_jumpL.h goku_dash1.h goku_dash1L.h goku_dash2.h goku_dash2L.h goku_dash3.h goku_dash3L.h \
-goku_down.h goku_downL.h platform_up.h platform_left.h platform_right.h
+goku_down.h goku_downL.h platform_up.h platform_left.h platform_right.h goal.h
 
 ################################################################################
 # These are various settings used to make the GBA toolchain work
