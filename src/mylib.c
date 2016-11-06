@@ -24,6 +24,7 @@
 #include "./images/platform_right.h"
  
 u16* videoBuffer = (u16*) 0x6000000;
+int qran_seed = 42;
 
 // set pixel (r,c) to a color
 void setPixel(int r, int c, u16 color) {
@@ -179,4 +180,3 @@ int checkCollision(PLAYER player, PLATFORM platform, int scenario) {
 	} 
     return 0;
 }
-

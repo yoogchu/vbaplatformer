@@ -70,7 +70,7 @@ int game() {
 	PLAYER player = {0,0, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, 2, 1, RIGHT, STAND};
 	PLAYER oldPlayer = drawPlayer(player, 0);
 
-	int num_plat = (rand()%3)+4;
+	int num_plat = (rand()%2)+2;
 	int countL = 0;
 	int countM = 0;
 	int countR = 0;
@@ -92,7 +92,7 @@ int game() {
 		platforms[i].col = rand()%(120 - PLATFORM_UP_WIDTH);
 
 		if (platforms[i].facing == 2) {
-			if (countR > 2) {
+			if (countR >= 2) {
 				num_plat++;
 				continue;
 			}
@@ -103,7 +103,7 @@ int game() {
 			
 			countR++;
 		} else if (platforms[i].facing == 1) {
-			if (countL > 2) {
+			if (countL >= 2) {
 				num_plat++;
 				continue;
 			}
@@ -113,7 +113,7 @@ int game() {
 			
 			countL++;
 		} else if (platforms[i].facing == 0) {
-			if (countM > 2) {
+			if (countM >= 2) {
 				num_plat++;
 				continue;
 			}
@@ -204,8 +204,8 @@ int game() {
 			} else if (player.row > platforms[i].row) {	//goku below platform
 				if ((checkCollision(player, platforms[i], 1)) & (player.stance == JUMP)) {
 					player.row = platforms[i].row + platforms[i].height;
-					player.doubleJump = 2;
-					player.dash = 1;
+				//	player.doubleJump = 2;
+				//		player.dash = 1;
 					score++;
 					sprintf(score_buffer, "%i", score); 
 				}
