@@ -10,9 +10,6 @@
 #include "./images/platform_right.h"
 #include "./images/goku_down.h"
 
-
-
-
 #define PLAYER_SPEED 2
 #define DASH_LENGTH 40
 #define GOKU_DASH_HEIGHT 33
@@ -66,24 +63,17 @@ int game() {
 	REG_DISPCNT = MODE3 | BG2_ENABLE;
 	setColor(BLACK);
 
-//	PLAYER player = {160 - GOKU_STAND_HEIGHT + 5, 0, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, 2, 1, RIGHT, STAND};
-//	PLAYER oldPlayer = player;
+	PLAYER player = {50,0, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, 2, 1, RIGHT, STAND};
+	PLAYER oldPlayer = drawPlayer(player, 0);
 
-    	
-//	drawPlayer(player, 0);
-
-//draw platforms
-	int num_plat = (rand()%2)+2;
-//	int num_plat = 1;
+	int num_plat = (rand()%3)+4;
+	int countL = 0;
+	int countM = 0;
+	int countR = 0;
 	PLATFORM platforms [num_plat];
- 	
-	PLAYER player = {0, 0, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, 2, 1, RIGHT, STAND};
-
-    	
-    PLAYER  oldPlayer =	drawPlayer(player, 0);
-
-	for(int i=0;i<num_plat;i++){
-		if (i == 0) {
+//draw platforms
+	for(int i=0;i<num_plat;i++) {
+		if (i == 0) {	//starting platform
 			platforms[i].row = 160-PLATFORM_UP_HEIGHT;
 			platforms[i].col =  0;
 			platforms[i].width = PLATFORM_UP_WIDTH;
@@ -94,21 +84,40 @@ int game() {
 		}
 		platforms[i].facing = rand()%3;
 	//	platforms[i].facing = 0;
-		platforms[i].row = (rand()%120) - PLATFORM_LEFT_HEIGHT;
+		platforms[i].row = (rand()%120) + 30;
 		platforms[i].col = rand()%(120 - PLATFORM_UP_WIDTH);
 
 		if (platforms[i].facing == 2) {
-			platforms[i].row-=60;
+			if (countR > 2) {
+				num_plat++;
+				continue;
+			}
+			platforms[i].row-=40;
 			platforms[i].height = PLATFORM_RIGHT_HEIGHT;
 			platforms[i].width = PLATFORM_RIGHT_WIDTH;
+			platforms[i].col = player.width + 5 + rand()%20;
+			
+			countR++;
 		} else if (platforms[i].facing == 1) {
+			if (countL > 2) {
+				num_plat++;
+				continue;
+			}
 			platforms[i].col+=120;
 			platforms[i].height = PLATFORM_LEFT_HEIGHT;
 			platforms[i].width = PLATFORM_LEFT_WIDTH;
+			
+			countL++;
 		} else if (platforms[i].facing == 0) {
+			if (countM > 2) {
+				num_plat++;
+				continue;
+			}
 			platforms[i].col+=60;
 			platforms[i].height = PLATFORM_UP_HEIGHT;
 			platforms[i].width = PLATFORM_UP_WIDTH;
+
+			countM++;
 		}
 		if (platforms[i].row < 0) platforms[i].row = 0;
 		if (platforms[i].row > 120) platforms[i].row = 120 - GOKU_STAND_HEIGHT - 20;
@@ -121,19 +130,15 @@ int game() {
 	int score = 0;
 	while(1) {
 		player.row += 2; 	//GRAVITY
-		frame+=1;
+		frame+=1;		//animations
 
-        
-       // 	if (player.row > 160 - player.height) player.row = 160-player.height;//return END;
-	//	if (player.row < 0) player.row = 0;
-	//	if (player.col < 0) player.col = 0;
-	//	if (player.col > 240 - player.width) player.col = 240 - player.width;
+//BUTTONS PRESSED
 		if (!KEY_DOWN_NOW(BUTTONS)) {
 			player.stance = STAND;
 			player.height = GOKU_STAND_HEIGHT;
 		}
 		
-       		if (KEY_DOWN_NOW(BUTTON_START)) {
+       		if (KEY_DOWN_NOW(BUTTON_SELECT)) {
 			return END;
 		} 
         	if (KEY_DOWN_NOW(BUTTON_UP) && (isValidJump == 0) && (player.doubleJump>0) ) {
@@ -166,8 +171,8 @@ int game() {
 				player.col -= DASH_LENGTH;
 			} else if (player.facing == RIGHT) {
 				player.col += DASH_LENGTH;
-                		//player.row += (oldPlayer.height - GOKU_DASH_HEIGHT) + oldPlayer.row;
 			}
+			player.dash--;
 		}
 //collision check
 		for (int i = 0;i < num_plat;i++) {
@@ -189,10 +194,12 @@ int game() {
 				}
 			}
 		}
+
+//bounds
                	if (player.row > 160 - GOKU_STAND_HEIGHT) player.row = 160 - player.height;
 		if (player.row < 0) player.row = 0;
 		if (player.col < 0) player.col = 0;
-		if (player.col + player.width > 240) player.col = 240 - GOKU_STAND_WIDTH - 5;
+		if (player.col + player.width > 240) player.col = 240 - player.width;
 
 
 		isValidJump = KEY_DOWN_NOW(BUTTON_UP);
@@ -212,9 +219,9 @@ void end(){
 	drawString(30, 70, "Your Score: ", WHITE);
 	drawString(30, 160, score_buffer, WHITE);
 	drawImage3(70, 100, GOKU_DEAD_WIDTH, GOKU_DEAD_HEIGHT, goku_dead);
-	drawString(132, 45, "Press Select to Play Again", WHITE);
+	drawString(132, 45, "Press Start to Play Again", WHITE);
 
-	while(!KEY_DOWN_NOW(BUTTON_SELECT));
-	while(KEY_DOWN_NOW(BUTTON_SELECT));
+	while(!KEY_DOWN_NOW(BUTTON_START));
+	while(KEY_DOWN_NOW(BUTTON_START));
 }
 
