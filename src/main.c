@@ -128,7 +128,7 @@ int game() {
 	int isValidDash = 0;
 	int frame = 0;
 	int score = 0;
-    int hasLanded = 1;
+   	int hasLanded = 1;
 //    int hasDashed = 0; 
 	while(1) {
 		player.row += 2; 	//GRAVITY
@@ -137,14 +137,11 @@ int game() {
 		if (hasLanded == 1) {
                 	player.stance = STAND;
                 	player.height = GOKU_STAND_HEIGHT;
-            	}	
+            	} else {
+			player.stance = oldPlayer.stance;
+		}
 
 //BUTTONS PRESSED
-		if (!KEY_DOWN_NOW(BUTTONS)) {
-			player.stance = STAND;
-			player.height = GOKU_STAND_HEIGHT;
-		}
-		
        		if (KEY_DOWN_NOW(BUTTON_SELECT)) {
 			return END;
 		}
