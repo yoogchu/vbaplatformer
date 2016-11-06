@@ -192,10 +192,9 @@ int game() {
 
 		isValidJump = KEY_DOWN_NOW(BUTTON_UP);
 		isValidDash = KEY_DOWN_NOW(BUTTON_A);
-		drawRect(oldPlayer.row, oldPlayer.col, oldPlayer.width, oldPlayer.height, BLACK);
+        drawRect(oldPlayer.row, oldPlayer.col, oldPlayer.width, oldPlayer.height, BLACK);
 
-        	drawPlayer(player, frame);
-        	oldPlayer = player;
+        	oldPlayer = drawPlayer(player, frame);
 		waitForVblank();
 		if (frame == 2) frame = -1;
 	}

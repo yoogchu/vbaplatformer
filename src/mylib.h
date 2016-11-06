@@ -137,7 +137,7 @@ typedef struct {
 void drawImage(const unsigned short arr[]);
 void drawImage3(int r, int c, int width, int height, const u16* image);
 
-void drawPlayer(PLAYER player, int frame);
+PLAYER drawPlayer(PLAYER player, int frame);
 void drawPlatform(PLATFORM platform);
 
 void setColor(u16 color);
