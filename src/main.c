@@ -13,7 +13,6 @@
 
 
 #define PLAYER_SPEED 2
-#define GOKU_STAND_HEIGHT 48
 #define DASH_LENGTH 50
 #define GOKU_DASH_HEIGHT 33
 
@@ -64,7 +63,7 @@ void start() {
 
 int game() {
 	REG_DISPCNT = MODE3 | BG2_ENABLE;
-	setColor(WHITE);
+	setColor(BLACK);
 
 //	PLAYER player = {160 - GOKU_STAND_HEIGHT + 5, 0, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, 2, 1, RIGHT, STAND};
 //	PLAYER oldPlayer = player;
