@@ -18,6 +18,9 @@
 #define DASH_LENGTH 40
 #define GOKU_DASH_HEIGHT 33
 #define JUMP_HEIGHT 35
+#define GRAVITY 2
+#define JUMP_SPEED 5
+#define SIDE_SLIDE 1
 
 enum {START, GAME, END};
 
@@ -142,11 +145,11 @@ int game() {
 		
 		if (player.row <= currentJump - JUMP_HEIGHT) isJumping = 0; 
 		if (isJumping) {
-			player.row -= 5;
+			player.row -= JUMP_SPEED;
 			player.stance = JUMP;
 			
 		}
-		player.row += 2; 	//GRAVITY
+		player.row += GRAVITY; 	//GRAVITY
 		frame+=1;		//animations
 
 		if (hasLanded == 1) {
@@ -203,23 +206,40 @@ int game() {
 		}
 //collision check
 		for (int i = 0;i < num_plat;i++) {
-			if (player.row < platforms[i].row) {		//goku above platform
+			if (player.col + player.width < platforms[i].col) {		//side hit right
+				if (checkCollision(player, platforms[i], 3)) {
+					player.col = platforms[i].col - player.width - 1;
+					player.row -= SIDE_SLIDE;
+					player.doubleJump = 2;
+					score++;
+					sprintf(score_buffer, "%i", score);
+					drawString(30, 160, score_buffer, WHITE);
+				}
+			} else if (player.col > platforms[i].col + platforms[i].width) {//side hit right
+				if (checkCollision(player, platforms[i], 4)) {
+					player.col = platforms[i].col + platforms[i].width - 1;
+					player.row -= SIDE_SLIDE;
+					player.doubleJump = 2;
+					score++;
+					sprintf(score_buffer, "%i", score);
+					drawString(30, 160, score_buffer, WHITE);
+				}
+			}
+			else if ((player.row) < platforms[i].row) {			//goku above platform
 				if (checkCollision(player, platforms[i], 2)) {
 					player.row = platforms[i].row - player.height;
 					player.doubleJump = 2;
 					player.dash = 1;
-				//	score++;
-					sprintf(score_buffer, "%i", score);
                     			hasLanded = 1;
 				}
-			} else if (player.row > platforms[i].row) {	//goku below platform
+			} else if (player.row > platforms[i].row) {			//goku below platform
 				if (checkCollision(player, platforms[i], 1) & isJumping) {
 					player.row = platforms[i].row + platforms[i].height;
 					isJumping = 0;
-					player.row +=2;
-					score++;
+					player.doubleJump = 1;
+					
 				}
-			}
+			} 
 		}
 
 //bounds
