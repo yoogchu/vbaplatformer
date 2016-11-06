@@ -140,6 +140,7 @@ int game() {
    	int hasLanded = 1;
 	int currentJump = 0;
 	int isJumping = 0;
+	int hasCollided = 0;
 //  	int hasDashed = 0;
 	while(1) {
 		
@@ -182,7 +183,7 @@ int game() {
 			player.facing = LEFT;
 			player.width = GOKU_RUN1L_WIDTH;
 			player.height = GOKU_RUN1L_HEIGHT;
-			player.col -= PLAYER_SPEED;
+			if (!(hasCollided)) player.col -= PLAYER_SPEED;
 		} 
         
         	if (KEY_DOWN_NOW(BUTTON_RIGHT)) {
@@ -190,7 +191,7 @@ int game() {
 			player.facing = RIGHT;
 			player.width = GOKU_RUN1_WIDTH;
 			player.height = GOKU_RUN1_HEIGHT;
-			player.col += PLAYER_SPEED;
+			if (!(hasCollided)) player.col += PLAYER_SPEED;
 		} 
         
         	if (KEY_DOWN_NOW(BUTTON_A) && (isValidDash == 0) && (player.dash > 0)) {
@@ -209,29 +210,32 @@ int game() {
 			if (player.col + player.width < platforms[i].col) {		//side hit right
 				if (checkCollision(player, platforms[i], 3)) {
 					player.col = platforms[i].col - player.width - 1;
-					player.row -= SIDE_SLIDE;
+					player.row -= 1;
+					hasCollided = 1;
 					player.doubleJump = 2;
 					score++;
 					sprintf(score_buffer, "%i", score);
 					drawString(30, 160, score_buffer, WHITE);
+					isJumping = 0;
 				}
-			} else if (player.col > platforms[i].col + platforms[i].width) {//side hit right
+			} else if (player.col > platforms[i].col + platforms[i].width) {//side hit left
 				if (checkCollision(player, platforms[i], 4)) {
-					player.col = platforms[i].col + platforms[i].width - 1;
-					player.row -= SIDE_SLIDE;
+					player.col = platforms[i].col + platforms[i].width + 1;
+					player.row -= 1;
+					hasCollided = 1;
 					player.doubleJump = 2;
 					score++;
 					sprintf(score_buffer, "%i", score);
 					drawString(30, 160, score_buffer, WHITE);
-				}
-			}
-			else if ((player.row) < platforms[i].row) {			//goku above platform
+					isJumping = 0;
+				} /*
+			} else if ((player.row) < platforms[i].row) {			//goku above platform
 				if (checkCollision(player, platforms[i], 2)) {
 					player.row = platforms[i].row - player.height;
 					player.doubleJump = 2;
 					player.dash = 1;
                     			hasLanded = 1;
-				}
+				} */
 			} else if (player.row > platforms[i].row) {			//goku below platform
 				if (checkCollision(player, platforms[i], 1) & isJumping) {
 					player.row = platforms[i].row + platforms[i].height;
@@ -239,7 +243,9 @@ int game() {
 					player.doubleJump = 1;
 					
 				}
-			} 
+			} else {
+				hasCollided = 0;
+			}
 		}
 
 //bounds
