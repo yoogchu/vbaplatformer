@@ -14,7 +14,7 @@
 
 #define PLAYER_SPEED 2
 #define GOKU_STAND_HEIGHT 48
-#define DASH_LENGTH 50
+#define DASH_LENGTH 40
 #define GOKU_DASH_HEIGHT 33
 
 enum {START, GAME, END};
@@ -78,10 +78,9 @@ int game() {
 	PLATFORM platforms [num_plat];
  	
 	PLAYER player = {0, 0, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, 2, 1, RIGHT, STAND};
-	PLAYER oldPlayer = player;
 
     	
-	drawPlayer(player, 0);
+    PLAYER  oldPlayer =	drawPlayer(player, 0);
 
 	for(int i=0;i<num_plat;i++){
 		if (i == 0) {
@@ -124,11 +123,7 @@ int game() {
 		player.row += 2; 	//GRAVITY
 		frame+=1;
 
-        	if (player.row > 160 - GOKU_STAND_HEIGHT) return END;
-		if (player.row < 0) player.row = 0;
-		if (player.col < 0) player.col = 0;
-		if (player.col > 240 - GOKU_STAND_WIDTH) player.col = 240 - GOKU_STAND_WIDTH;
-
+        
 		if (!KEY_DOWN_NOW(BUTTONS)) {
 			player.stance = STAND;
 		}
@@ -163,10 +158,9 @@ int game() {
 			player.stance = DASH;
 			if (player.facing == LEFT) {
 				player.col -= DASH_LENGTH;
-                		player.row += (oldPlayer.height - GOKU_DASH_HEIGHT) + oldPlayer.row;
 			} else if (player.facing == RIGHT) {
 				player.col += DASH_LENGTH;
-                		player.row += (oldPlayer.height - GOKU_DASH_HEIGHT) + oldPlayer.row;
+                		//player.row += (oldPlayer.height - GOKU_DASH_HEIGHT) + oldPlayer.row;
 			}
 		}
 //collision check
@@ -189,6 +183,11 @@ int game() {
 				}
 			}
 		}
+               	if (player.row > 160 - GOKU_STAND_HEIGHT) player.row = 160 - player.height;
+		if (player.row < 0) player.row = 0;
+		if (player.col < 0) player.col = 0;
+		if (player.col > 240 - DASH_LENGTH) player.col = 240 - GOKU_STAND_WIDTH;
+
 
 		isValidJump = KEY_DOWN_NOW(BUTTON_UP);
 		isValidDash = KEY_DOWN_NOW(BUTTON_A);
