@@ -9,6 +9,10 @@
 #include "./images/platform_left.h"
 #include "./images/platform_right.h"
 #include "./images/goku_down.h"
+#include "./images/goku_dash1.h"
+#include "./images/goku_run1L.h"
+#include "./images/goku_run1.h"
+
 
 #define PLAYER_SPEED 2
 #define DASH_LENGTH 40
@@ -153,7 +157,8 @@ int game() {
 		} 
         
        		if (KEY_DOWN_NOW(BUTTON_DOWN)) {
-			player.stance = DOWN;
+			player.stance = DOWN;\
+			player.width = GOKU_DOWN_WIDTH;
 			player.height = GOKU_DOWN_HEIGHT;
 //			player.row += PLAYER_SPEED;
 		} 
@@ -161,17 +166,23 @@ int game() {
         	if(KEY_DOWN_NOW(BUTTON_LEFT)) {
 			player.stance = RUN;
 			player.facing = LEFT;
+			player.width = GOKU_RUN1L_WIDTH;
+			player.height = GOKU_RUN1L_HEIGHT;
 			player.col -= PLAYER_SPEED;
 		} 
         
         	if (KEY_DOWN_NOW(BUTTON_RIGHT)) {
 			player.stance = RUN;
 			player.facing = RIGHT;
+			player.width = GOKU_RUN1_WIDTH;
+			player.height = GOKU_RUN1_HEIGHT;
 			player.col += PLAYER_SPEED;
 		} 
         
         	if (KEY_DOWN_NOW(BUTTON_A) && (isValidDash == 0) && (player.dash > 0)) {
 			player.stance = DASH;
+			player.width = GOKU_DASH1_WIDTH;
+			player.height = GOKU_DASH1_HEIGHT;
 			if (player.facing == LEFT) {
 				player.col -= DASH_LENGTH;
 			} else if (player.facing == RIGHT) {
