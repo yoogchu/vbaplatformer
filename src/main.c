@@ -63,7 +63,7 @@ int game() {
 	REG_DISPCNT = MODE3 | BG2_ENABLE;
 	setColor(BLACK);
 
-	PLAYER player = {50,0, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, 2, 1, RIGHT, STAND};
+	PLAYER player = {0,0, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, 2, 1, RIGHT, STAND};
 	PLAYER oldPlayer = drawPlayer(player, 0);
 
 	int num_plat = (rand()%3)+4;
@@ -128,9 +128,16 @@ int game() {
 	int isValidDash = 0;
 	int frame = 0;
 	int score = 0;
+    int hasLanded = 1;
+//    int hasDashed = 0; 
 	while(1) {
 		player.row += 2; 	//GRAVITY
 		frame+=1;		//animations
+
+		if (hasLanded == 1) {
+                	player.stance = STAND;
+                	player.height = GOKU_STAND_HEIGHT;
+            	}	
 
 //BUTTONS PRESSED
 		if (!KEY_DOWN_NOW(BUTTONS)) {
@@ -140,11 +147,12 @@ int game() {
 		
        		if (KEY_DOWN_NOW(BUTTON_SELECT)) {
 			return END;
-		} 
+		}
         	if (KEY_DOWN_NOW(BUTTON_UP) && (isValidJump == 0) && (player.doubleJump>0) ) {
 			player.stance = JUMP;
 			player.row -= player.height/2;
 			player.doubleJump--;
+            hasLanded = 0;
 		} 
         
        		if (KEY_DOWN_NOW(BUTTON_DOWN)) {
@@ -182,7 +190,8 @@ int game() {
 					player.doubleJump = 2;
 					player.dash = 1;
 					score++;
-					sprintf(score_buffer, "%i", score); 
+					sprintf(score_buffer, "%i", score);
+                    			hasLanded = 1;
 				}
 			} else if (player.row > platforms[i].row) {	//goku below platform
 				if ((checkCollision(player, platforms[i], 1)) & (player.stance == JUMP)) {
@@ -204,7 +213,7 @@ int game() {
 
 		isValidJump = KEY_DOWN_NOW(BUTTON_UP);
 		isValidDash = KEY_DOWN_NOW(BUTTON_A);
-        drawRect(oldPlayer.row, oldPlayer.col, oldPlayer.width, oldPlayer.height, BLACK);
+        	drawRect(oldPlayer.row, oldPlayer.col, oldPlayer.width, oldPlayer.height, BLACK);
 
         	oldPlayer = drawPlayer(player, frame);
 		waitForVblank();
