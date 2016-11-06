@@ -130,7 +130,6 @@ typedef struct {
 	int col;
 	int width;
 	int height;
-	int num;
 	int facing;
 } PLATFORM;
 
@@ -149,5 +148,4 @@ void drawRect(int r, int c, int width, int height, u16 color);
 
 void waitForVblank();
 int checkCollision(PLAYER player, PLATFORM platform, int scenario);
-int death(PLAYER player);
 
