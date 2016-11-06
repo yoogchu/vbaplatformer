@@ -218,7 +218,7 @@ int game() {
 			if ((!(abs(player.col + player.width - goal.col) < 3)) ||
 			(!(abs(player.col-goal.col-goal.width) < 3))){
 				hasCollided = 0;
-			}
+			} /*
 			if (player.col + player.width <= platforms[i].col) {		//side hit right
 				if (checkCollision(player, platforms[i], 3)) {
 					player.col = platforms[i].col - player.width - 1;
@@ -235,7 +235,7 @@ int game() {
 					player.doubleJump = 2;
 					score++;
 				} 
-			} else if ((player.row) < platforms[i].row) {			//goku above platform
+			} else */ if ((player.row) < platforms[i].row) {			//goku above platform
 				if (checkCollision(player, platforms[i], 2)) {
 					player.row = platforms[i].row - player.height;
 					if (player.row < 0) player.row = platforms[i].row - platforms[i].height;
