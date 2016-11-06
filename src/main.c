@@ -14,7 +14,6 @@
 
 
 #define PLAYER_SPEED 2
-#define GOKU_STAND_HEIGHT 48
 #define DASH_LENGTH 40
 #define GOKU_DASH_HEIGHT 33
 
@@ -193,7 +192,7 @@ int game() {
                	if (player.row > 160 - GOKU_STAND_HEIGHT) player.row = 160 - player.height;
 		if (player.row < 0) player.row = 0;
 		if (player.col < 0) player.col = 0;
-		if (player.col > 240 - DASH_LENGTH) player.col = 240 - GOKU_STAND_WIDTH;
+		if (player.col + player.width > 240) player.col = 240 - GOKU_STAND_WIDTH - 5;
 
 
 		isValidJump = KEY_DOWN_NOW(BUTTON_UP);
