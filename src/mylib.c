@@ -45,7 +45,7 @@ void drawImage3(int r, int c, int width, int height, const u16* image) {
 	}
 }
 
-void drawPlayer(PLAYER player, int frame) {
+PLAYER drawPlayer(PLAYER player, int frame) {
 	//CHECK FACE HERE
  
     if (player.facing == RIGHT) {
@@ -56,18 +56,23 @@ void drawPlayer(PLAYER player, int frame) {
             	player.width = GOKU_DASH1_WIDTH;    
         } else if (player.stance == JUMP) {
         	drawImage3(player.row, player.col, GOKU_JUMP_WIDTH, GOKU_JUMP_HEIGHT, goku_jump);
-	 	player.height = GOKU_JUMP_HEIGHT;
+	 	    player.height = GOKU_JUMP_HEIGHT;
         	player.width = GOKU_JUMP_WIDTH; 
         } else if (player.stance == RUN) {
 		if (frame == 0) {
             		drawImage3(player.row, player.col, GOKU_RUN1_WIDTH, GOKU_RUN1_HEIGHT, goku_run1);
+                   player.height = GOKU_RUN1_HEIGHT;
+        	player.width = GOKU_RUN1_WIDTH; 
 		} else if(frame == 1){
 			drawImage3(player.row, player.col, GOKU_RUN2_WIDTH, GOKU_RUN2_HEIGHT, goku_run2);
+             player.height = GOKU_RUN2_HEIGHT;
+        	player.width = GOKU_RUN2_WIDTH; 
+
 		} else if(frame == 2){
 			drawImage3(player.row, player.col, GOKU_RUN3_WIDTH, GOKU_RUN3_HEIGHT, goku_run3);
+           player.height = GOKU_RUN3_HEIGHT;
+        	player.width = GOKU_RUN3_WIDTH; 
 		}
-	        player.height = GOKU_RUN1_HEIGHT;
-        	player.width = GOKU_RUN1_WIDTH;
         } else if (player.stance == STAND) {
         	drawImage3(player.row, player.col, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, goku_stand);
 	        player.height = GOKU_STAND_HEIGHT;
@@ -89,13 +94,19 @@ void drawPlayer(PLAYER player, int frame) {
         } else if (player.stance == RUN) {
 		if (frame == 0) {
             		drawImage3(player.row, player.col, GOKU_RUN1L_WIDTH, GOKU_RUN1L_HEIGHT, goku_run1L);
+                    player.height = GOKU_RUN1L_HEIGHT;
+            player.width = GOKU_RUN1L_WIDTH; 
 		} else if(frame == 1){
 			drawImage3(player.row, player.col, GOKU_RUN2L_WIDTH, GOKU_RUN2L_HEIGHT, goku_run2L);
+            player.height = GOKU_RUN2L_HEIGHT;
+            player.width = GOKU_RUN2L_WIDTH; 
+
 		} else if(frame == 2){
 			drawImage3(player.row, player.col, GOKU_RUN3L_WIDTH, GOKU_RUN3L_HEIGHT, goku_run3L);
+            player.height = GOKU_RUN3L_HEIGHT;
+            player.width = GOKU_RUN3L_WIDTH; 
+
 		}
-	        player.height = GOKU_RUN1_HEIGHT;
-            	player.width = GOKU_RUN1_WIDTH; 
         } else if (player.stance == STAND) {
             drawImage3(player.row, player.col, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, goku_standL);
 	        player.height = GOKU_STAND_HEIGHT;
@@ -105,7 +116,8 @@ void drawPlayer(PLAYER player, int frame) {
 	        player.height = GOKU_DOWN_HEIGHT;
         	player.width = GOKU_DOWN_WIDTH;
 	}
-	} 
+	}
+    return player; 
 } 
 
 void drawPlatform (PLATFORM platform) {
