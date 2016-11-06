@@ -8,6 +8,7 @@
 #include "./images/platform_up.h"
 #include "./images/platform_left.h"
 #include "./images/platform_right.h"
+#include "./images/goku_down.h"
 
 
 
@@ -64,7 +65,7 @@ void start() {
 
 int game() {
 	REG_DISPCNT = MODE3 | BG2_ENABLE;
-	setColor(WHITE);
+	setColor(BLACK);
 
 //	PLAYER player = {160 - GOKU_STAND_HEIGHT + 5, 0, GOKU_STAND_WIDTH, GOKU_STAND_HEIGHT, 2, 1, RIGHT, STAND};
 //	PLAYER oldPlayer = player;
@@ -124,8 +125,13 @@ int game() {
 		frame+=1;
 
         
+       // 	if (player.row > 160 - player.height) player.row = 160-player.height;//return END;
+	//	if (player.row < 0) player.row = 0;
+	//	if (player.col < 0) player.col = 0;
+	//	if (player.col > 240 - player.width) player.col = 240 - player.width;
 		if (!KEY_DOWN_NOW(BUTTONS)) {
 			player.stance = STAND;
+			player.height = GOKU_STAND_HEIGHT;
 		}
 		
        		if (KEY_DOWN_NOW(BUTTON_START)) {
@@ -139,7 +145,8 @@ int game() {
         
        		if (KEY_DOWN_NOW(BUTTON_DOWN)) {
 			player.stance = DOWN;
-			player.row += PLAYER_SPEED;
+			player.height = GOKU_DOWN_HEIGHT;
+//			player.row += PLAYER_SPEED;
 		} 
         
         	if(KEY_DOWN_NOW(BUTTON_LEFT)) {
