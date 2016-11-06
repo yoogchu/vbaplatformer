@@ -160,7 +160,7 @@ int game() {
 					player.row = platforms[i].row - player.height;
 				}
 			} else if (player.row > platforms[i].row) {	//goku below platform
-				if ((checkCollision(player, platforms[i], 1)) && (player.stance == JUMP)) {
+				if ((checkCollision(player, platforms[i], 1)) & (player.stance == JUMP)) {
 					player.row = platforms[i].row + platforms[i].height;
 				}
 			}
