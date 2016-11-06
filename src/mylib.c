@@ -24,6 +24,7 @@
 #include "./images/platform_right.h"
  
 u16* videoBuffer = (u16*) 0x6000000;
+int qran_seed = 42;
 
 // set pixel (r,c) to a color
 void setPixel(int r, int c, u16 color) {
@@ -169,14 +170,25 @@ int checkCollision(PLAYER player, PLATFORM platform, int scenario) {
 			return 1;
    			}
 		case 2:
-			 if ( ((player.row + player.height) >= platform.row) &&	//case dropping in from top
-			((player.col + player.width) >= platform.col) &&
-			(player.col <= (platform.col + platform.width)) ) {
+			if ( ((player.row + player.height) >= platform.row) &&		//case dropping in from top
+			((player.col + player.width) > platform.col) &&
+			(player.col < (platform.col + platform.width)) ) {
 			return 2;
+			}
+		case 3:
+			if ( (player.row < (platform.row + platform.height)) && 	//case touching right side
+			( (player.row + player.height) >= (platform.row + platform.height)) &&
+			( (player.col + player.width + 1) == platform.col)) {
+			return 3;
+			}
+		case 4:
+			if ( (player.row < (platform.row + platform.height)) && 	//case touching left side
+			( (player.row + player.height) >= (platform.row + platform.height)) &&
+			( (player.col - 1) == (platform.col + platform.width))){
+			return 4;
 			}
 		default:
 			return 0;
 	} 
     return 0;
 }
-
