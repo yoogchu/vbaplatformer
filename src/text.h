@@ -1,3 +1,4 @@
+//Created by Eugene Chu on 11/6/16
 #define NUMERAL_OFFSET 48
 void drawChar(int row, int col,  char ch, u16 color);
 void drawString(int row, int col,  char *str, u16 color);

@@ -1,3 +1,4 @@
+//Created by Eugene Chu on 11/6/16
 #include <stdlib.h>
 #include <stdio.h>
 #include "mylib.h"
@@ -20,7 +21,7 @@
 #define GOKU_DASH_HEIGHT 33
 #define JUMP_HEIGHT 35
 #define GRAVITY 3
-#define JUMP_SPEED 5
+#define JUMP_SPEED 6
 #define SIDE_SLIDE 1
 
 enum {START, GAME, END};
@@ -60,10 +61,10 @@ int main() {
 void start() {
 	REG_DISPCNT = MODE3 | BG2_ENABLE;
 	setColor(BLACK);
-	drawString(20, 90, "GET HIGH", GREEN);
+	drawString(20, 90, "GET BALLS", GREEN);
 	
     	drawImage3(160 - GOKU_MAIN_HEIGHT,0, GOKU_MAIN_WIDTH, GOKU_MAIN_HEIGHT, goku_main);    
-	drawString(50, 45, "Goku wants to get high!", WHITE);
+	drawString(50, 45, "Goku wants to get balls!", WHITE);
 	drawString(75, 60, "Press Start to Play", WHITE);
 
 	while(!KEY_DOWN_NOW(BUTTON_START));
@@ -145,7 +146,7 @@ int game() {
    	int hasLanded = 1;
 	int currentJump = 0;
 	int isJumping = 0;
-//	int hasCollided = 0;
+	int hasCollided = 0;
 	while(1) {
 		drawString(140, 180, "SCORE: ", WHITE);
 		drawRect(140,220, 30, 30, BLACK);
@@ -188,7 +189,7 @@ int game() {
 			player.facing = LEFT;
 			player.width = GOKU_RUN1L_WIDTH;
 			player.height = GOKU_RUN1L_HEIGHT;
-		//	if (!(hasCollided))
+			if (!(hasCollided))
 			player.col -= PLAYER_SPEED;
 		} 
         
@@ -197,7 +198,7 @@ int game() {
 			player.facing = RIGHT;
 			player.width = GOKU_RUN1_WIDTH;
 			player.height = GOKU_RUN1_HEIGHT;
-		//	if (!(hasCollided))
+			if (!(hasCollided))
 			player.col += PLAYER_SPEED;
 		} 
         
@@ -214,35 +215,27 @@ int game() {
 		}
 //collision check
 		for (int i = 0;i < num_plat;i++) {
-	/*		if ((!(player.col == platforms[i].col + platforms[i].width + 1)) ||
-			(!(player.col+player.width+1 == platforms[i].col))){
+			if ((!(abs(player.col + player.width - goal.col) < 3)) ||
+			(!(abs(player.col-goal.col-goal.width) < 3))){
 				hasCollided = 0;
 			}
 			if (player.col + player.width <= platforms[i].col) {		//side hit right
 				if (checkCollision(player, platforms[i], 3)) {
 					player.col = platforms[i].col - player.width - 1;
-					player.row -= 1;
+					player.row -= 2;
 					hasCollided = 1;
 					player.doubleJump = 2;
 					score++;
-					drawRect(30,160, 30, 30, BLACK);
-					sprintf(score_buffer, "%i", score);
-					drawString(30, 160, score_buffer, WHITE);
-					isJumping = 0;
 				}
 			} else if (player.col >= platforms[i].col + platforms[i].width) {//side hit left
 				if (checkCollision(player, platforms[i], 4)) {
 					player.col = platforms[i].col + platforms[i].width + 1;
-					player.row -= 1;
+					player.row -= 2;
 					hasCollided = 1;
 					player.doubleJump = 2;
 					score++;
-					drawRect(30,160, 30, 30, BLACK);
-					sprintf(score_buffer, "%i", score);
-					drawString(30, 160, score_buffer, WHITE);
-					isJumping = 0;
 				} 
-			} else */ if ((player.row) < platforms[i].row) {			//goku above platform
+			} else if ((player.row) < platforms[i].row) {			//goku above platform
 				if (checkCollision(player, platforms[i], 2)) {
 					player.row = platforms[i].row - player.height;
 					if (player.row < 0) player.row = platforms[i].row - platforms[i].height;

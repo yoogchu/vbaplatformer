@@ -1,3 +1,4 @@
+//Created by Eugene Chu on 11/6/16
 #include <stdio.h>
 #include <stdlib.h>
 #include "mylib.h"
@@ -25,25 +26,23 @@
 #include "./images/goal.h"
  
 u16* videoBuffer = (u16*) 0x6000000;
-int qran_seed = 42;
 
-// set pixel (r,c) to a color
-void setPixel(int r, int c, u16 color) {
-	videoBuffer[OFFSET(r, c, 240)] = color;
+// set pixel (row,column) to a color
+void setPixel(int row, int column, u16 color) {
+	videoBuffer[OFFSET(row, column, 240)] = color;
 }
 
 //draw image using DMA3
-void drawImage3(int r, int c, int width, int height, const u16* image) {
+void drawImage3(int row, int column, int width, int height, const u16* image) {
 	for (int i = 0; i < height; i++) {
 		DMA[3].src = &image[OFFSET(i, 0, width)];
-		DMA[3].dst = videoBuffer + OFFSET(r+i, c, 240);
+		DMA[3].dst = videoBuffer + OFFSET(row+i, column, 240);
 		DMA[3].cnt = width | DMA_ON;
 	}
 }
 //draw player
 PLAYER drawPlayer(PLAYER player, int frame) {
 	//CHECK FACE HERE
- 
 	if (player.facing == RIGHT) {
 	    //CHECK STANCE HERE
 		if (player.stance == DASH) {
@@ -193,6 +192,7 @@ int checkCollision(PLAYER player, PLATFORM platform, int scenario) {
 	} 
 	return 0;
 }
+//check if hit goal
 int checkCollisionGoal(PLAYER player, GOAL goal, int scenario) {
 	switch(scenario) {
 		case 1:
@@ -202,7 +202,7 @@ int checkCollisionGoal(PLAYER player, GOAL goal, int scenario) {
 			return 1;
    			}
 		case 2:
-			if ( ((player.row + player.height) >= goal.row) &&		//case dropping in from top
+			if ( ((player.row + player.height) >= goal.row) &&	//case dropping in from top
 			((player.col + player.width) > goal.col) &&
 			(player.col < (goal.col + goal.width)) ) {
 			return 2;
@@ -216,7 +216,7 @@ int checkCollisionGoal(PLAYER player, GOAL goal, int scenario) {
 		case 4:
 			if ( (player.row < (goal.row + goal.height)) && 	//case touching left side
 			( (player.row + player.height + 1) >= (goal.row + goal.height)) &&
-			( abs(player.col-goal.col-goal.width) < 3)){
+			( abs(player.col-goal.col-goal.width) < 3)) {
 			return 4;
 			}
 		default:
