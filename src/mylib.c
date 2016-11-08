@@ -177,14 +177,14 @@ int checkCollision(PLAYER player, PLATFORM platform, int scenario) {
 			}
 		case 3:
 			if ( (player.row < (platform.row + platform.height)) && 	//case touching right side
-			( (player.row + player.height) >= (platform.row + platform.height)) &&
-			( (player.col + player.width + 1) == platform.col)) {
+			( (player.row + player.height) > (platform.row)) &&
+			( abs(player.col + player.width - platform.col) < 2)) {
 			return 3;
 			}
 		case 4:
 			if ( (player.row < (platform.row + platform.height)) && 	//case touching left side
-			( (player.row + player.height + 1) >= (platform.row + platform.height)) &&
-			( (player.col - 1) == (platform.col + platform.width))){
+			( (player.row + player.height) > (platform.row)) &&
+			( abs(platform.col+platform.width-player.col) < 2)){
 			return 4;
 			}
 		default:

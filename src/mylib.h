@@ -48,9 +48,9 @@ typedef struct
 	const volatile void *src;
 	volatile void *dst;
 	volatile u32 cnt;
-} DMAREC;
+} DMA_CONTROLLER;
 
-#define DMA ((volatile DMAREC *)0x040000B0)
+#define DMA ((volatile DMA_CONTROLLER *)0x040000B0)
 
 /* DMA channel 0 register definitions*/
 #define REG_DMA0SAD         *(vu32*)0x40000B0  /* source address*/
@@ -105,13 +105,7 @@ typedef struct
 
 #define DMA_ON (1 << 31)
 
-#define START_ON_FIFO_EMPTY 0x30000000
-
-
 // game
-#define INFO_GUTTER_WIDTH 40
-#define DOODLER_SIZE DOODLER32_HEIGHT
-#define ENEMY_SIZE ENEMY_WIDTH
 
 typedef struct {
 	int row;
